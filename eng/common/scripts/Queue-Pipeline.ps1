@@ -6,7 +6,6 @@ param(
   [Parameter(Mandatory = $true)]
   [string]$Project,
 
-  [Parameter(Mandatory = $true)]
   [string]$SourceBranch,
 
   [Parameter(Mandatory = $true)]
