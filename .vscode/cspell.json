@@ -169,22 +169,22 @@
   // * Alphabetize the list when making changes so the list is easier for future
   //   users to maintain and reason about.
   "words": [
+    "agrifood",
+    "azsdk",
+    "cobertura",
+    "contoso",
     "creds",
     "deps",
+    "dotenv",
+    "fqdns",
     "msal",
     "pwsh",
-    "rollup",
-    "uglifyjs",
-    "skus",
-    "cobertura",
-    "agrifood",
-    "dotenv",
-    "azsdk",
     "rasterize",
-    "contoso",
-    "tsdoc",
+    "rollup",
     "sastoken",
-    "fqdns",
+    "skus",
+    "tsdoc",
+    "uglifyjs"
   ],
   "allowCompoundWords": true
 }
