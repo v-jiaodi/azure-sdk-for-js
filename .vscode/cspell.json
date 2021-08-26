@@ -176,7 +176,9 @@
     "creds",
     "deps",
     "dotenv",
+    "etag",
     "fqdns",
+    "mbps",
     "msal",
     "pwsh",
     "rasterize",
@@ -184,7 +186,8 @@
     "sastoken",
     "skus",
     "tsdoc",
-    "uglifyjs"
+    "uglifyjs",
+    "unencrypted"
   ],
   "allowCompoundWords": true
 }
