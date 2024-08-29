@@ -1,6 +1,6 @@
 # Release History
 
-## 14.1.1 (Unreleased)
+## 17.0.1 (Unreleased)
 
 ### Features Added
 
@@ -10,9 +10,221 @@
 
 ### Other Changes
 
+## 17.0.0 (2024-08-27)
+    
+### Features Added
+
+  - Added Interface AzureStorageLinkedServiceTypeProperties
+  - Added Interface AzureTableStorageLinkedServiceTypeProperties
+  - Added Interface ContinuationSettingsReference
+  - Interface AzureFileStorageLinkedService has a new optional parameter credential
+  - Interface AzureFileStorageLinkedService has a new optional parameter serviceEndpoint
+  - Interface AzureTableStorageLinkedService has a new optional parameter credential
+  - Interface AzureTableStorageLinkedService has a new optional parameter serviceEndpoint
+  - Interface CommonDataServiceForAppsLinkedService has a new optional parameter domain
+  - Interface DynamicsCrmLinkedService has a new optional parameter domain
+  - Interface DynamicsLinkedService has a new optional parameter domain
+  - Interface ExecuteDataFlowActivity has a new optional parameter continuationSettings
+  - Interface ExecuteDataFlowActivityTypeProperties has a new optional parameter continuationSettings
+  - Interface ExecuteWranglingDataflowActivity has a new optional parameter continuationSettings
+  - Interface LinkedService has a new optional parameter version
+  - Interface RestServiceLinkedService has a new optional parameter servicePrincipalCredentialType
+  - Interface RestServiceLinkedService has a new optional parameter servicePrincipalEmbeddedCert
+  - Interface RestServiceLinkedService has a new optional parameter servicePrincipalEmbeddedCertPassword
+  - Interface SharePointOnlineListLinkedService has a new optional parameter servicePrincipalCredentialType
+  - Interface SharePointOnlineListLinkedService has a new optional parameter servicePrincipalEmbeddedCert
+  - Interface SharePointOnlineListLinkedService has a new optional parameter servicePrincipalEmbeddedCertPassword
+  - Interface SnowflakeExportCopyCommand has a new optional parameter storageIntegration
+  - Interface SnowflakeImportCopyCommand has a new optional parameter storageIntegration
+  - Interface SqlServerLinkedService has a new optional parameter credential
+  - Interface SqlServerLinkedServiceTypeProperties has a new optional parameter credential
+  - Interface VerticaLinkedService has a new optional parameter database
+  - Interface VerticaLinkedService has a new optional parameter port
+  - Interface VerticaLinkedService has a new optional parameter server
+  - Interface VerticaLinkedService has a new optional parameter uid
+  - Enum KnownDynamicsAuthenticationType has a new value ActiveDirectory
+  - Enum KnownSqlServerAuthenticationType has a new value UserAssignedManagedIdentity
+
+### Breaking Changes
+
+  - Interface HDInsightOnDemandLinkedService has a new required parameter versionTypePropertiesVersion
+    
+    
+## 16.0.0 (2024-06-11)
+    
+### Features Added
+
+  - Added Interface AmazonRdsForSqlServerLinkedServiceTypeProperties
+  - Added Interface AzureSqlDatabaseLinkedServiceTypeProperties
+  - Added Interface AzureSqlDWLinkedServiceTypeProperties
+  - Added Interface AzureSqlMILinkedServiceTypeProperties
+  - Added Interface SqlServerBaseLinkedServiceTypeProperties
+  - Added Interface SqlServerLinkedServiceTypeProperties
+  - Added Type Alias AmazonRdsForSqlAuthenticationType
+  - Added Type Alias AzureSqlDatabaseAuthenticationType
+  - Added Type Alias AzureSqlDWAuthenticationType
+  - Added Type Alias AzureSqlMIAuthenticationType
+  - Added Type Alias SqlServerAuthenticationType
+  - Interface AmazonRdsForSqlServerLinkedService has a new optional parameter applicationIntent
+  - Interface AmazonRdsForSqlServerLinkedService has a new optional parameter authenticationType
+  - Interface AmazonRdsForSqlServerLinkedService has a new optional parameter commandTimeout
+  - Interface AmazonRdsForSqlServerLinkedService has a new optional parameter connectRetryCount
+  - Interface AmazonRdsForSqlServerLinkedService has a new optional parameter connectRetryInterval
+  - Interface AmazonRdsForSqlServerLinkedService has a new optional parameter connectTimeout
+  - Interface AmazonRdsForSqlServerLinkedService has a new optional parameter database
+  - Interface AmazonRdsForSqlServerLinkedService has a new optional parameter encrypt
+  - Interface AmazonRdsForSqlServerLinkedService has a new optional parameter failoverPartner
+  - Interface AmazonRdsForSqlServerLinkedService has a new optional parameter hostNameInCertificate
+  - Interface AmazonRdsForSqlServerLinkedService has a new optional parameter integratedSecurity
+  - Interface AmazonRdsForSqlServerLinkedService has a new optional parameter loadBalanceTimeout
+  - Interface AmazonRdsForSqlServerLinkedService has a new optional parameter maxPoolSize
+  - Interface AmazonRdsForSqlServerLinkedService has a new optional parameter minPoolSize
+  - Interface AmazonRdsForSqlServerLinkedService has a new optional parameter multipleActiveResultSets
+  - Interface AmazonRdsForSqlServerLinkedService has a new optional parameter multiSubnetFailover
+  - Interface AmazonRdsForSqlServerLinkedService has a new optional parameter packetSize
+  - Interface AmazonRdsForSqlServerLinkedService has a new optional parameter pooling
+  - Interface AmazonRdsForSqlServerLinkedService has a new optional parameter server
+  - Interface AmazonRdsForSqlServerLinkedService has a new optional parameter trustServerCertificate
+  - Interface AzureSqlDatabaseLinkedService has a new optional parameter applicationIntent
+  - Interface AzureSqlDatabaseLinkedService has a new optional parameter authenticationType
+  - Interface AzureSqlDatabaseLinkedService has a new optional parameter commandTimeout
+  - Interface AzureSqlDatabaseLinkedService has a new optional parameter connectRetryCount
+  - Interface AzureSqlDatabaseLinkedService has a new optional parameter connectRetryInterval
+  - Interface AzureSqlDatabaseLinkedService has a new optional parameter connectTimeout
+  - Interface AzureSqlDatabaseLinkedService has a new optional parameter database
+  - Interface AzureSqlDatabaseLinkedService has a new optional parameter encrypt
+  - Interface AzureSqlDatabaseLinkedService has a new optional parameter failoverPartner
+  - Interface AzureSqlDatabaseLinkedService has a new optional parameter hostNameInCertificate
+  - Interface AzureSqlDatabaseLinkedService has a new optional parameter integratedSecurity
+  - Interface AzureSqlDatabaseLinkedService has a new optional parameter loadBalanceTimeout
+  - Interface AzureSqlDatabaseLinkedService has a new optional parameter maxPoolSize
+  - Interface AzureSqlDatabaseLinkedService has a new optional parameter minPoolSize
+  - Interface AzureSqlDatabaseLinkedService has a new optional parameter multipleActiveResultSets
+  - Interface AzureSqlDatabaseLinkedService has a new optional parameter multiSubnetFailover
+  - Interface AzureSqlDatabaseLinkedService has a new optional parameter packetSize
+  - Interface AzureSqlDatabaseLinkedService has a new optional parameter pooling
+  - Interface AzureSqlDatabaseLinkedService has a new optional parameter server
+  - Interface AzureSqlDatabaseLinkedService has a new optional parameter servicePrincipalCredential
+  - Interface AzureSqlDatabaseLinkedService has a new optional parameter servicePrincipalCredentialType
+  - Interface AzureSqlDatabaseLinkedService has a new optional parameter trustServerCertificate
+  - Interface AzureSqlDatabaseLinkedService has a new optional parameter userName
+  - Interface AzureSqlDWLinkedService has a new optional parameter applicationIntent
+  - Interface AzureSqlDWLinkedService has a new optional parameter authenticationType
+  - Interface AzureSqlDWLinkedService has a new optional parameter commandTimeout
+  - Interface AzureSqlDWLinkedService has a new optional parameter connectRetryCount
+  - Interface AzureSqlDWLinkedService has a new optional parameter connectRetryInterval
+  - Interface AzureSqlDWLinkedService has a new optional parameter connectTimeout
+  - Interface AzureSqlDWLinkedService has a new optional parameter database
+  - Interface AzureSqlDWLinkedService has a new optional parameter encrypt
+  - Interface AzureSqlDWLinkedService has a new optional parameter failoverPartner
+  - Interface AzureSqlDWLinkedService has a new optional parameter hostNameInCertificate
+  - Interface AzureSqlDWLinkedService has a new optional parameter integratedSecurity
+  - Interface AzureSqlDWLinkedService has a new optional parameter loadBalanceTimeout
+  - Interface AzureSqlDWLinkedService has a new optional parameter maxPoolSize
+  - Interface AzureSqlDWLinkedService has a new optional parameter minPoolSize
+  - Interface AzureSqlDWLinkedService has a new optional parameter multipleActiveResultSets
+  - Interface AzureSqlDWLinkedService has a new optional parameter multiSubnetFailover
+  - Interface AzureSqlDWLinkedService has a new optional parameter packetSize
+  - Interface AzureSqlDWLinkedService has a new optional parameter pooling
+  - Interface AzureSqlDWLinkedService has a new optional parameter server
+  - Interface AzureSqlDWLinkedService has a new optional parameter servicePrincipalCredential
+  - Interface AzureSqlDWLinkedService has a new optional parameter servicePrincipalCredentialType
+  - Interface AzureSqlDWLinkedService has a new optional parameter trustServerCertificate
+  - Interface AzureSqlDWLinkedService has a new optional parameter userName
+  - Interface AzureSqlMILinkedService has a new optional parameter applicationIntent
+  - Interface AzureSqlMILinkedService has a new optional parameter authenticationType
+  - Interface AzureSqlMILinkedService has a new optional parameter commandTimeout
+  - Interface AzureSqlMILinkedService has a new optional parameter connectRetryCount
+  - Interface AzureSqlMILinkedService has a new optional parameter connectRetryInterval
+  - Interface AzureSqlMILinkedService has a new optional parameter connectTimeout
+  - Interface AzureSqlMILinkedService has a new optional parameter database
+  - Interface AzureSqlMILinkedService has a new optional parameter encrypt
+  - Interface AzureSqlMILinkedService has a new optional parameter failoverPartner
+  - Interface AzureSqlMILinkedService has a new optional parameter hostNameInCertificate
+  - Interface AzureSqlMILinkedService has a new optional parameter integratedSecurity
+  - Interface AzureSqlMILinkedService has a new optional parameter loadBalanceTimeout
+  - Interface AzureSqlMILinkedService has a new optional parameter maxPoolSize
+  - Interface AzureSqlMILinkedService has a new optional parameter minPoolSize
+  - Interface AzureSqlMILinkedService has a new optional parameter multipleActiveResultSets
+  - Interface AzureSqlMILinkedService has a new optional parameter multiSubnetFailover
+  - Interface AzureSqlMILinkedService has a new optional parameter packetSize
+  - Interface AzureSqlMILinkedService has a new optional parameter pooling
+  - Interface AzureSqlMILinkedService has a new optional parameter server
+  - Interface AzureSqlMILinkedService has a new optional parameter servicePrincipalCredential
+  - Interface AzureSqlMILinkedService has a new optional parameter servicePrincipalCredentialType
+  - Interface AzureSqlMILinkedService has a new optional parameter trustServerCertificate
+  - Interface AzureSqlMILinkedService has a new optional parameter userName
+  - Interface DynamicsCrmLinkedService has a new optional parameter credential
+  - Interface ExpressionV2 has a new optional parameter operators
+  - Interface LakeHouseTableDataset has a new optional parameter schemaTypePropertiesSchema
+  - Interface ManagedIdentityCredential has a new optional parameter resourceId
+  - Interface SalesforceServiceCloudV2Source has a new optional parameter query
+  - Interface SalesforceV2Source has a new optional parameter query
+  - Interface SqlServerLinkedService has a new optional parameter applicationIntent
+  - Interface SqlServerLinkedService has a new optional parameter authenticationType
+  - Interface SqlServerLinkedService has a new optional parameter commandTimeout
+  - Interface SqlServerLinkedService has a new optional parameter connectRetryCount
+  - Interface SqlServerLinkedService has a new optional parameter connectRetryInterval
+  - Interface SqlServerLinkedService has a new optional parameter connectTimeout
+  - Interface SqlServerLinkedService has a new optional parameter database
+  - Interface SqlServerLinkedService has a new optional parameter encrypt
+  - Interface SqlServerLinkedService has a new optional parameter failoverPartner
+  - Interface SqlServerLinkedService has a new optional parameter hostNameInCertificate
+  - Interface SqlServerLinkedService has a new optional parameter integratedSecurity
+  - Interface SqlServerLinkedService has a new optional parameter loadBalanceTimeout
+  - Interface SqlServerLinkedService has a new optional parameter maxPoolSize
+  - Interface SqlServerLinkedService has a new optional parameter minPoolSize
+  - Interface SqlServerLinkedService has a new optional parameter multipleActiveResultSets
+  - Interface SqlServerLinkedService has a new optional parameter multiSubnetFailover
+  - Interface SqlServerLinkedService has a new optional parameter packetSize
+  - Interface SqlServerLinkedService has a new optional parameter pooling
+  - Interface SqlServerLinkedService has a new optional parameter server
+  - Interface SqlServerLinkedService has a new optional parameter trustServerCertificate
+  - Type of parameter type of interface Credential_2 is changed from "ManagedIdentity" | "ServicePrincipal" to "ServicePrincipal" | "ManagedIdentity"
+  - Added Enum KnownAmazonRdsForSqlAuthenticationType
+  - Added Enum KnownAzureSqlDatabaseAuthenticationType
+  - Added Enum KnownAzureSqlDWAuthenticationType
+  - Added Enum KnownAzureSqlMIAuthenticationType
+  - Added Enum KnownSqlServerAuthenticationType
+  - Enum KnownExpressionV2Type has a new value NAry
+
+### Breaking Changes
+
+  - Interface ExpressionV2 no longer has parameter operator
+  - Type of parameter type of interface ScriptActivityScriptBlock is changed from ScriptType to any
+    
+    
+## 15.0.0 (2024-04-12)
+    
+### Features Added
+
+  - Added Interface ServicePrincipalCredentialResource
+  - Type of parameter headers of interface AzureFunctionActivity is changed from {
+        [propertyName: string]: string;
+    } to {
+        [propertyName: string]: any;
+    }
+  - Type of parameter headers of interface WebActivity is changed from {
+        [propertyName: string]: string;
+    } to {
+        [propertyName: string]: any;
+    }
+  - Type of parameter headers of interface WebHookActivity is changed from {
+        [propertyName: string]: string;
+    } to {
+        [propertyName: string]: any;
+    }
+
+### Breaking Changes
+
+  - Operation CredentialOperations.createOrUpdate has a new signature
+  - Interface ManagedIdentityCredential no longer has parameter resourceId
+  - Type of parameter value of interface CredentialListResponse is changed from ManagedIdentityCredentialResource[] to CredentialResource[]
+    
+    
 ## 14.1.0 (2024-03-11)
     
-**Features**
+### Features Added
 
   - Added Interface ExpressionV2
   - Added Interface GoogleBigQueryV2LinkedService
@@ -38,7 +250,7 @@
     
 ## 14.0.0 (2024-02-04)
     
-**Features**
+### Features Added
 
   - Added Interface SnowflakeV2Dataset
   - Added Interface SnowflakeV2LinkedService
@@ -60,7 +272,7 @@
   - Type of parameter type of interface TabularSource has a new value "WarehouseSource"
   - Added Enum KnownSnowflakeAuthenticationType
 
-**Breaking Changes**
+### Breaking Changes
 
   - Interface SalesforceServiceCloudV2Source no longer has parameter readBehavior
   - Interface SalesforceV2Source no longer has parameter readBehavior
@@ -78,7 +290,7 @@
     
 ## 13.0.0 (2023-12-28)
     
-**Features**
+### Features Added
 
   - Added Interface SalesforceServiceCloudV2LinkedService
   - Added Interface SalesforceServiceCloudV2ObjectDataset
@@ -114,14 +326,14 @@
   - Added Enum KnownSalesforceV2SinkWriteBehavior
   - Added Enum KnownSalesforceV2SourceReadBehavior
 
-**Breaking Changes**
+### Breaking Changes
 
   - Interface MariaDBLinkedService no longer has parameter pwd
     
     
 ## 12.0.0 (2023-11-10)
     
-**Features**
+### Features Added
 
   - Added operation group ChangeDataCapture
   - Added Interface ChangeDataCaptureCreateOrUpdateOptionalParams
@@ -264,7 +476,7 @@
   - Added Enum KnownFrequencyType
   - Added Enum KnownMappingType
 
-**Breaking Changes**
+### Breaking Changes
 
   - Interface HttpReadSettings no longer has parameter enablePartitionDiscovery
   - Interface HttpReadSettings no longer has parameter partitionRootPath
@@ -396,7 +608,7 @@
     
 ## 11.1.0 (2023-03-02)
     
-**Features**
+### Features Added
 
   - Interface AzureBlobFSLinkedService has a new optional parameter sasToken
   - Interface AzureBlobFSLinkedService has a new optional parameter sasUri
@@ -404,7 +616,7 @@
     
 ## 11.0.0 (2023-02-10)
     
-**Features**
+### Features Added
 
   - Added operation group CredentialOperations
   - Added Interface CopyComputeScaleProperties
@@ -438,31 +650,31 @@
   - Added Enum KnownSparkConfigurationReferenceType
   - Type of parameter numExecutors of interface SynapseSparkJobDefinitionActivity is changed from number to any
 
-**Breaking Changes**
+### Breaking Changes
 
   - Parameter exportSettings of interface SnowflakeSource is now required
 
     
 ## 10.10.1 (2023-01-04)
 
-**Features**
+### Features Added
 
 -  Exposes `getContinuationToken` helper function to extract continuation token
 
-**Bugs Fixed**
+### Bugs Fixed
 
 - A series of small bug fixs relevant to authentication and apiVersion policy
 
 ## 10.10.0 (2022-11-04)
     
-**Features**
+### Features Added
 
   - Interface ScriptActivity has a new optional parameter scriptBlockExecutionTimeout
     
     
 ## 10.9.0 (2022-10-17)
     
-**Features**
+### Features Added
 
   - Interface AzureSynapseArtifactsLinkedService has a new optional parameter workspaceResourceId
   - Interface FactoryRepoConfiguration has a new optional parameter disablePublish
@@ -472,7 +684,7 @@
     
 ## 10.8.0 (2022-09-07)
     
-**Features**
+### Features Added
 
   - Added Interface AzureSynapseArtifactsLinkedService
   - Added Interface BigDataPoolParametrizationReference
@@ -494,7 +706,7 @@
     
 ## 10.7.0 (2022-06-22)
     
-**Features**
+### Features Added
 
   - Added Interface AmazonMWSLinkedService
   - Added Interface AmazonMWSObjectDataset
@@ -997,7 +1209,7 @@
     
 ## 10.6.0 (2022-06-07)
     
-**Features**
+### Features Added
 
   - Added operation group GlobalParameters
   - Added Interface GlobalParameterListResponse
@@ -1027,7 +1239,7 @@
     
 ## 10.5.0 (2022-05-09)
     
-**Features**
+### Features Added
 
   - Added Interface PrivateEndpoint
   - Interface PrivateLinkConnectionApprovalRequest has a new optional parameter privateEndpoint
@@ -1036,7 +1248,7 @@
     
 ## 10.4.0 (2022-04-20)
     
-**Features**
+### Features Added
 
   - Added Type Alias AppFiguresLinkedService
   - Added Type Alias AsanaLinkedService
@@ -1046,7 +1258,7 @@
     
 ## 10.3.0 (2022-04-06)
     
-**Features**
+### Features Added
 
   - Added Interface ExecutePipelineActivityPolicy
   - Added Type Alias CredentialReferenceType
@@ -1064,7 +1276,7 @@
     
 ## 10.2.0 (2022-02-22)
     
-**Features**
+### Features Added
 
   - Added Interface ScriptActivityParameter
   - Added Interface ScriptActivityScriptBlock
@@ -1090,7 +1302,7 @@
     
 ## 10.1.0 (2022-01-10)
     
-**Features**
+### Features Added
 
   - Added Type Alias FailActivity
   - Type Alias AzureBlobFSLinkedService has a new parameter servicePrincipalCredentialType

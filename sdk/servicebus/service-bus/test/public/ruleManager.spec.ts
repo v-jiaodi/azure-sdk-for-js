@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import {
   CorrelationRuleFilter,
@@ -17,8 +17,9 @@ import {
   createServiceBusClientForTests,
 } from "../public/utils/testutils2";
 import { recreateSubscription } from "./utils/managementUtils";
+
 chai.use(chaiAsPromised);
-const assert = chai.assert;
+const assert: typeof chai.assert = chai.assert;
 
 const defaultRuleName = "$Default";
 interface Order {

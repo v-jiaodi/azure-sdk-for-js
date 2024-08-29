@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { getClient, ClientOptions } from "@azure-rest/core-client";
 import { logger } from "./logger";
@@ -19,7 +19,7 @@ export default function createClient(
 ): MessagesServiceClient {
   const baseUrl = options.baseUrl ?? `${endpoint}`;
   options.apiVersion = options.apiVersion ?? "2024-02-01";
-  const userAgentInfo = `azsdk-js-communication-messages-rest/1.0.0-beta.2`;
+  const userAgentInfo = `azsdk-js-communication-messages-rest/1.1.0-beta.1`;
   const userAgentPrefix =
     options.userAgentOptions && options.userAgentOptions.userAgentPrefix
       ? `${options.userAgentOptions.userAgentPrefix} ${userAgentInfo}`

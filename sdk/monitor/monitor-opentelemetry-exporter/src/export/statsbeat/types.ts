@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 export class NetworkStatsbeat {
   public time: number | undefined;
@@ -116,6 +116,7 @@ export interface StatsbeatOptions {
   endpointUrl: string;
   networkCollectionInterval?: number;
   longCollectionInterval?: number;
+  disableOfflineStorage?: boolean;
 }
 
 export interface VirtualMachineInfo {

@@ -120,6 +120,18 @@ export type AcsChatParticipantRemovedFromThreadWithUserEventData = AcsChatThread
 };
 
 // @public
+export type AcsChatThreadCreatedEventData = AcsChatThreadEventInThreadBase & {
+    createdByCommunicationIdentifier: CommunicationIdentifierModel;
+    properties: {
+        [propertyName: string]: any;
+    };
+    metadata: {
+        [propertyName: string]: string;
+    };
+    participants: AcsChatThreadParticipant[];
+};
+
+// @public
 export type AcsChatThreadCreatedWithUserEventData = AcsChatThreadEventBase & {
     createdByCommunicationIdentifier: CommunicationIdentifierModel;
     properties: {
@@ -132,7 +144,19 @@ export type AcsChatThreadCreatedWithUserEventData = AcsChatThreadEventBase & {
 };
 
 // @public
+export type AcsChatThreadDeletedEventData = AcsChatThreadEventInThreadBase & {
+    deletedByCommunicationIdentifier: CommunicationIdentifierModel;
+    deleteTime: string;
+};
+
+// @public
 export type AcsChatThreadEventBase = AcsChatEventBase & {
+    createTime: string;
+    version: number;
+};
+
+// @public
+export type AcsChatThreadEventInThreadBase = AcsChatEventInThreadBase & {
     createTime: string;
     version: number;
 };
@@ -145,6 +169,18 @@ export interface AcsChatThreadParticipant {
     };
     participantCommunicationIdentifier: CommunicationIdentifierModel;
 }
+
+// @public
+export type AcsChatThreadPropertiesUpdatedEventData = AcsChatThreadEventInThreadBase & {
+    editedByCommunicationIdentifier: CommunicationIdentifierModel;
+    editTime: string;
+    properties: {
+        [propertyName: string]: any;
+    };
+    metadata: {
+        [propertyName: string]: string;
+    };
+};
 
 // @public
 export type AcsChatThreadPropertiesUpdatedPerUserEventData = AcsChatThreadEventBase & {
@@ -2470,19 +2506,23 @@ export interface StorageAsyncOperationInitiatedEventData {
 }
 
 // @public
+export type StorageBlobAccessTier = string;
+
+// @public
 export interface StorageBlobCreatedEventData {
-    api: string;
-    blobType: string;
-    clientRequestId: string;
-    contentLength: number;
-    contentOffset: number;
-    contentType: string;
-    eTag: string;
-    identity: string;
-    requestId: string;
-    sequencer: string;
-    storageDiagnostics: any;
-    url: string;
+    accessTier: StorageBlobAccessTier;
+    api?: string;
+    blobType?: string;
+    clientRequestId?: string;
+    contentLength?: number;
+    contentOffset?: number;
+    contentType?: string;
+    eTag?: string;
+    identity?: string;
+    requestId?: string;
+    sequencer?: string;
+    storageDiagnostics?: any;
+    url?: string;
 }
 
 // @public
@@ -2523,16 +2563,18 @@ export interface StorageBlobRenamedEventData {
 
 // @public
 export interface StorageBlobTierChangedEventData {
-    api: string;
-    blobType: string;
-    clientRequestId: string;
-    contentLength: number;
-    contentType: string;
-    identity: string;
-    requestId: string;
-    sequencer: string;
-    storageDiagnostics: any;
-    url: string;
+    accessTier: StorageBlobAccessTier;
+    api?: string;
+    blobType?: string;
+    clientRequestId?: string;
+    contentLength?: number;
+    contentType?: string;
+    identity?: string;
+    previousTier: StorageBlobAccessTier;
+    requestId?: string;
+    sequencer?: string;
+    storageDiagnostics?: any;
+    url?: string;
 }
 
 // @public
@@ -2689,9 +2731,12 @@ export interface SystemEventNameToEventData {
     "Microsoft.Communication.ChatMessageReceivedInThread": AcsChatMessageReceivedInThreadEventData;
     "Microsoft.Communication.ChatParticipantAddedToThreadWithUser": AcsChatParticipantAddedToThreadWithUserEventData;
     "Microsoft.Communication.ChatParticipantRemovedFromThreadWithUser": AcsChatParticipantRemovedFromThreadWithUserEventData;
+    "Microsoft.Communication.ChatThreadCreated": AcsChatThreadCreatedEventData;
     "Microsoft.Communication.ChatThreadCreatedWithUser": AcsChatThreadCreatedWithUserEventData;
+    "Microsoft.Communication.ChatThreadDeleted": AcsChatThreadDeletedEventData;
     "Microsoft.Communication.ChatThreadParticipantAdded": AcsChatParticipantAddedToThreadEventData;
     "Microsoft.Communication.ChatThreadParticipantRemoved": AcsChatParticipantRemovedFromThreadEventData;
+    "Microsoft.Communication.ChatThreadPropertiesUpdated": AcsChatThreadPropertiesUpdatedEventData;
     "Microsoft.Communication.ChatThreadPropertiesUpdatedPerUser": AcsChatThreadPropertiesUpdatedPerUserEventData;
     "Microsoft.Communication.ChatThreadWithUserDeleted": AcsChatThreadWithUserDeletedEventData;
     "Microsoft.Communication.EmailDeliveryReportReceived": AcsEmailDeliveryReportReceivedEventData;

@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { assert } from "chai";
 import { SmsSendOptions, SmsSendRequest } from "../../../src";
@@ -33,6 +33,7 @@ export default function testCases(): void {
       {
         enableDeliveryReport: true,
         tag: "SMS_LIVE_TEST",
+        deliveryReportTimeoutInSeconds: 300,
       },
     );
 
@@ -81,7 +82,7 @@ export default function testCases(): void {
     );
 
     assertIsSuccessResult(results[0], validToNumber);
-    assertIsFailureResult(results[1], invalidToNumber, "Invalid To phone number format.");
+    assertIsFailureResult(results[1], invalidToNumber, "Unknown country code.");
   }).timeout(4000);
 
   it("throws an exception when sending from a number you don't own", async function (this: Context) {

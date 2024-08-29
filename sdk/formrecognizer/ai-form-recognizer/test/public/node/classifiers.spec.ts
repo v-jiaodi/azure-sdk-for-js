@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { assert } from "chai";
 import { Context } from "mocha";
 
-import { matrix } from "@azure/test-utils";
+import { matrix } from "@azure-tools/test-utils";
 
 import { Recorder, assertEnvironmentVariable } from "@azure-tools/test-recorder";
 

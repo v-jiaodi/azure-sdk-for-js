@@ -1,7 +1,7 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
-import { assert } from "@azure/test-utils";
+import { assert } from "@azure-tools/test-utils";
 import { DeletedSecret, KeyVaultSecret } from "../../src";
 import { DeletedSecretBundle, SecretBundle } from "../../src/generated";
 import { getSecretFromSecretBundle } from "../../src/transformations";

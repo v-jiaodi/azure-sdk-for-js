@@ -1,7 +1,6 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
-import { URL } from "url";
 import { ReadableSpan, TimedEvent } from "@opentelemetry/sdk-trace-base";
 import { hrTimeToMilliseconds } from "@opentelemetry/core";
 import { diag, SpanKind, SpanStatusCode, Link, Attributes } from "@opentelemetry/api";
@@ -86,7 +85,9 @@ function createTagsFromSpan(span: ReadableSpan): Tags {
         try {
           const url = new URL(String(httpUrl));
           tags[KnownContextTagKeys.AiOperationName] = `${httpMethod} ${url.pathname}`;
-        } catch (ex: any) {}
+        } catch {
+          /* no-op */
+        }
       }
       if (httpClientIp) {
         tags[KnownContextTagKeys.AiLocationIp] = String(httpClientIp);
@@ -115,6 +116,7 @@ function createPropertiesFromSpanAttributes(attributes?: Attributes): {
       if (
         !(
           key.startsWith("_MS.") ||
+          key.startsWith("microsoft.") ||
           key === SEMATTRS_NET_PEER_IP ||
           key === SEMATTRS_NET_PEER_NAME ||
           key === SEMATTRS_PEER_SERVICE ||
@@ -183,7 +185,9 @@ function createDependencyData(span: ReadableSpan): RemoteDependencyData {
       try {
         const dependencyUrl = new URL(String(httpUrl));
         remoteDependencyData.name = `${httpMethod} ${dependencyUrl.pathname}`;
-      } catch (ex: any) {}
+      } catch {
+        /* no-op */
+      }
     }
     remoteDependencyData.type = DependencyTypes.Http;
     remoteDependencyData.data = getUrl(span.attributes);
@@ -208,7 +212,9 @@ function createDependencyData(span: ReadableSpan): RemoteDependencyData {
             target = res[1] + res[2] + res[4];
           }
         }
-      } catch (ex: any) {}
+      } catch {
+        /* no-op */
+      }
       remoteDependencyData.target = `${target}`;
     }
   }
@@ -245,7 +251,7 @@ function createDependencyData(span: ReadableSpan): RemoteDependencyData {
   }
   // grpc Dependency
   else if (rpcSystem) {
-    if (rpcSystem == DependencyTypes.Wcf) {
+    if (rpcSystem === DependencyTypes.Wcf) {
       remoteDependencyData.type = DependencyTypes.Wcf;
     } else {
       remoteDependencyData.type = DependencyTypes.Grpc;
@@ -267,7 +273,9 @@ function createDependencyData(span: ReadableSpan): RemoteDependencyData {
 function createRequestData(span: ReadableSpan): RequestData {
   const requestData: RequestData = {
     id: `${span.spanContext().spanId}`,
-    success: span.status.code !== SpanStatusCode.ERROR,
+    success:
+      span.status.code !== SpanStatusCode.ERROR &&
+      (Number(span.attributes[SEMATTRS_HTTP_STATUS_CODE]) || 0) < 400,
     responseCode: "0",
     duration: msToTimeSpan(hrTimeToMilliseconds(span.duration)),
     version: 2,
@@ -376,40 +384,45 @@ export function spanEventsToEnvelopes(span: ReadableSpan, ikey: string): Envelop
       }
 
       // Only generate exception telemetry for incoming requests
-      if (event.name === "exception" && span.kind === SpanKind.SERVER) {
-        name = "Microsoft.ApplicationInsights.Exception";
-        baseType = "ExceptionData";
-        let typeName = "";
-        let message = "Exception";
-        let stack = "";
-        let hasFullStack = false;
-        if (event.attributes) {
-          typeName = String(event.attributes[SEMATTRS_EXCEPTION_TYPE]);
-          stack = String(event.attributes[SEMATTRS_EXCEPTION_STACKTRACE]);
-          if (stack) {
-            hasFullStack = true;
+      if (event.name === "exception") {
+        if (span.kind === SpanKind.SERVER) {
+          name = "Microsoft.ApplicationInsights.Exception";
+          baseType = "ExceptionData";
+          let typeName = "";
+          let message = "Exception";
+          let stack = "";
+          let hasFullStack = false;
+          if (event.attributes) {
+            typeName = String(event.attributes[SEMATTRS_EXCEPTION_TYPE]);
+            stack = String(event.attributes[SEMATTRS_EXCEPTION_STACKTRACE]);
+            if (stack) {
+              hasFullStack = true;
+            }
+            const exceptionMsg = event.attributes[SEMATTRS_EXCEPTION_MESSAGE];
+            if (exceptionMsg) {
+              message = String(exceptionMsg);
+            }
+            const escaped = event.attributes[SEMATTRS_EXCEPTION_ESCAPED];
+            if (escaped !== undefined) {
+              properties[SEMATTRS_EXCEPTION_ESCAPED] = String(escaped);
+            }
           }
-          const exceptionMsg = event.attributes[SEMATTRS_EXCEPTION_MESSAGE];
-          if (exceptionMsg) {
-            message = String(exceptionMsg);
-          }
-          const escaped = event.attributes[SEMATTRS_EXCEPTION_ESCAPED];
-          if (escaped !== undefined) {
-            properties[SEMATTRS_EXCEPTION_ESCAPED] = String(escaped);
-          }
+          const exceptionDetails: TelemetryExceptionDetails = {
+            typeName: typeName,
+            message: message,
+            stack: stack,
+            hasFullStack: hasFullStack,
+          };
+          const exceptionData: TelemetryExceptionData = {
+            exceptions: [exceptionDetails],
+            version: 2,
+            properties: properties,
+          };
+          baseData = exceptionData;
+        } else {
+          // Drop non-server exception span events
+          return;
         }
-        const exceptionDetails: TelemetryExceptionDetails = {
-          typeName: typeName,
-          message: message,
-          stack: stack,
-          hasFullStack: hasFullStack,
-        };
-        const exceptionData: TelemetryExceptionData = {
-          exceptions: [exceptionDetails],
-          version: 2,
-          properties: properties,
-        };
-        baseData = exceptionData;
       } else {
         name = "Microsoft.ApplicationInsights.Message";
         baseType = "MessageData";

@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 /* eslint-disable no-unused-expressions */
 /* eslint-disable no-constant-condition */
@@ -99,6 +99,7 @@ type ExpectSearchFieldDataType = Exclude<
   | "Edm.Half"
   | "Edm.Int16"
   | "Edm.SByte"
+  | "Edm.Byte"
 >;
 type ExpectSearchIndexerDataSourceType = `${KnownSearchIndexerDataSourceType}`;
 type ExpectSemanticErrorMode = `${KnownSemanticErrorMode}`;

@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 /// <reference lib="es2015" />
 /// <reference lib="esnext.asynciterable" />
@@ -18,6 +18,8 @@ export { Delivery, WebSocketImpl } from "rhea-promise";
 export { ServiceBusClientOptions } from "./constructorHelpers";
 export { CorrelationRuleFilter } from "./core/managementClient";
 export {
+  DeleteMessagesOptions,
+  PurgeMessagesOptions,
   CreateMessageBatchOptions,
   GetMessageIteratorOptions,
   MessageHandlers,

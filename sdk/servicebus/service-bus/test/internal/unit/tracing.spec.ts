@@ -1,11 +1,11 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 import {
   MockInstrumenter,
   MockTracingSpan,
   assert,
   createMockTracingContext,
-} from "@azure/test-utils";
+} from "@azure-tools/test-utils";
 import {
   TRACEPARENT_PROPERTY,
   instrumentMessage,

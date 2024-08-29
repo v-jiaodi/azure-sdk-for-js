@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { Context, Test } from "mocha";
 import { Recorder, SanitizerOptions, env } from "@azure-tools/test-recorder";
@@ -18,12 +18,6 @@ const envSetupForPlayback: { [k: string]: string } = {
 };
 
 const sanitizerOptions: SanitizerOptions = {
-  connectionStringSanitizers: [
-    {
-      actualConnString: env.COMMUNICATION_CONNECTION_STRING_EMAIL,
-      fakeConnString: envSetupForPlayback["COMMUNICATION_CONNECTION_STRING_EMAIL"],
-    },
-  ],
   headerSanitizers: [
     { key: "x-ms-content-sha256", value: "Sanitized" },
     {

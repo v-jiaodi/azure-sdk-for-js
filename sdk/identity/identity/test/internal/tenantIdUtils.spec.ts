@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import {
   checkTenantId,
@@ -7,7 +7,7 @@ import {
   resolveTenantId,
 } from "../../src/util/tenantIdUtils";
 import { DeveloperSignOnClientId } from "../../src/constants";
-import { assert } from "@azure/test-utils";
+import { assert } from "@azure-tools/test-utils";
 import { credentialLogger } from "../../src/util/logging";
 
 describe("tenantIdUtils", () => {

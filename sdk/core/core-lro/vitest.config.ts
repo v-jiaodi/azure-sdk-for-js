@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { defineConfig } from "vitest/config";
 
@@ -7,7 +7,7 @@ export default defineConfig({
   test: {
     reporters: ["basic", "junit"],
     outputFile: {
-      junit: "test-results.browser.xml",
+      junit: "test-results.xml",
     },
     fakeTimers: {
       toFake: ["setTimeout", "Date"],

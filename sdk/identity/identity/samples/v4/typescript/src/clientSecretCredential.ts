@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 /**
  * @summary Authenticates with an app registration’s client ID and secret.
@@ -15,7 +15,7 @@ export async function main(): Promise<void> {
   const credential = new ClientSecretCredential(
     process.env.AZURE_TENANT_ID!, // The tenant ID in Microsoft Entra ID
     process.env.AZURE_CLIENT_ID!, // The app registration client Id in the Microsoft Entra tenant
-    process.env.AZURE_CLIENT_SECRET! // The app registration secret for the registered application
+    process.env.AZURE_CLIENT_SECRET!, // The app registration secret for the registered application
   );
 
   const keyVaultUrl = `https://key-vault-name.vault.azure.net`;

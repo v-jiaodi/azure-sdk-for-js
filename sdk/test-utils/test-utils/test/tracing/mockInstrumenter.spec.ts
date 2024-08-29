@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { createTracingClient, TracingClient, useInstrumenter } from "@azure/core-tracing";
 import { MockTracingSpan, MockInstrumenter } from "../../src";
@@ -99,6 +99,7 @@ describe("Test supportsTracing plugin functionality", function () {
   });
 
   it("supportsTracing with expect", async function () {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     await expect((options: any) => client.method(options)).to.supportTracing([
       "MockClientToTest.method",
     ]);

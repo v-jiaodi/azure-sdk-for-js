@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import {
   Recorder,
@@ -12,7 +12,7 @@ import {
   KnownManifestMediaType,
   OciImageManifest,
 } from "../../src";
-import { assert, versionsToTest } from "@azure/test-utils";
+import { assert, versionsToTest } from "@azure-tools/test-utils";
 import { Context } from "mocha";
 import { createBlobClient, recorderStartOptions, serviceVersions } from "../utils/utils";
 import fs from "fs";

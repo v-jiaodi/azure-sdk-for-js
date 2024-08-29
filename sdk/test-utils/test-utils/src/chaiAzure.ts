@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { assert } from "chai";
 import { OperationTracingOptions } from "@azure/core-tracing";
@@ -12,7 +12,7 @@ import { supportsTracing } from "./tracing/chaiAzureTrace";
  *
  * ```ts
  * import chai from "chai";
- * import { chaiAzure } from "@azure/test-utils";
+ * import { chaiAzure } from "@azure-tools/test-utils";
  * chai.use(chaiAzure);
  *
  * it("supportsTracing", async () => {

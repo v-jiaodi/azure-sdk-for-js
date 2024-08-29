@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 export interface PartitionKeyRangePropertiesNames {
   // Partition Key Range Constants
@@ -73,6 +73,7 @@ export const Constants = {
     ContinuationToken: "x-ms-continuation-token",
     PageSize: "x-ms-max-item-count",
     ItemCount: "x-ms-item-count",
+    ChangeFeedWireFormatVersion: "x-ms-cosmos-changefeed-wire-format-version",
 
     // Request sender generated. Simply echoed by backend.
     ActivityId: "x-ms-activity-id",
@@ -174,6 +175,7 @@ export const Constants = {
 
     // Dedicated Gateway Headers
     DedicatedGatewayPerRequestCacheStaleness: "x-ms-dedicatedgateway-max-age",
+    DedicatedGatewayPerRequestBypassCache: "x-ms-dedicatedgateway-bypass-cache",
 
     // Cache Refresh header
     ForceRefresh: "x-ms-force-refresh",
@@ -202,7 +204,7 @@ export const Constants = {
   AzureNamespace: "Azure.Cosmos",
   AzurePackageName: "@azure/cosmos",
   SDKName: "azure-cosmos-js",
-  SDKVersion: "4.0.1",
+  SDKVersion: "4.1.0",
 
   // Diagnostics
   CosmosDbDiagnosticLevelEnvVarName: "AZURE_COSMOSDB_DIAGNOSTICS_LEVEL",
@@ -259,6 +261,10 @@ export const Constants = {
     MinimumInclusiveEffectivePartitionKey: "",
     MaximumExclusiveEffectivePartitionKey: "FF",
   },
+
+  // Changefeed AllVersionsAndDeletesMode formatting version
+  AllVersionsAndDeletesChangeFeedWireFormatVersion: "2021-09-15",
+  ChangeFeedIfNoneMatchStartFromNowHeader: "*",
 };
 
 /**
@@ -470,4 +476,19 @@ export enum SasTokenPermissionKind {
   TriggerRead = PermissionScopeValues.ScopeTriggerReadValue,
   TriggerReplace = PermissionScopeValues.ScopeTriggerReplaceValue,
   TriggerDelete = PermissionScopeValues.ScopeTriggerDeleteValue,
+}
+
+export enum QueryFeature {
+  NonValueAggregate = "NonValueAggregate",
+  Aggregate = "Aggregate",
+  Distinct = "Distinct",
+  MultipleOrderBy = "MultipleOrderBy",
+  OffsetAndLimit = "OffsetAndLimit",
+  OrderBy = "OrderBy",
+  Top = "Top",
+  CompositeAggregate = "CompositeAggregate",
+  GroupBy = "GroupBy",
+  MultipleAggregates = "MultipleAggregates",
+  NonStreamingOrderBy = "NonStreamingOrderBy",
+  ListAndSetAggregate = "ListAndSetAggregate",
 }

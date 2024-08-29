@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { TokenCredential } from "@azure/core-auth";
 import { createTestCredential } from "@azure-tools/test-credential";
@@ -9,11 +9,7 @@ import * as fs from "fs";
 import * as path from "path";
 
 import { DataLakeServiceClient } from "../../src/DataLakeServiceClient";
-import {
-  newPipeline,
-  StoragePipelineOptions,
-  StorageSharedKeyCredential,
-} from "@azure/storage-blob";
+import { newPipeline, StoragePipelineOptions, StorageSharedKeyCredential } from "../../src";
 import { getUniqueName, SimpleTokenCredential, configureStorageClient } from "./testutils.common";
 import {
   AccountSASPermissions,

@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { parseConnectionString } from "@azure/core-amqp";
 
@@ -41,6 +41,11 @@ export interface EventHubConnectionStringProperties {
    * user and appended to the connection string for ease of use.
    */
   sharedAccessSignature?: string;
+  /**
+   * This should be true only if the connection string contains the slug ";UseDevelopmentEmulator=true"
+   * and the endpoint is a loopback address.
+   */
+  useDevelopmentEmulator?: boolean;
 }
 
 /**
@@ -58,6 +63,7 @@ export function parseEventHubConnectionString(
     SharedAccessSignature?: string;
     SharedAccessKey?: string;
     SharedAccessKeyName?: string;
+    UseDevelopmentEmulator?: string;
   }>(connectionString);
 
   validateProperties(

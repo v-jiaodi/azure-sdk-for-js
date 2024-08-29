@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 import { diag } from "@opentelemetry/api";
 import { PersistentStorage, SenderResult } from "../../types";
 import { AzureMonitorExporterOptions } from "../../config";
@@ -27,6 +27,7 @@ export abstract class BaseSender {
   private statsbeatFailureCount: number = 0;
   private batchSendRetryIntervalMs: number = DEFAULT_BATCH_SEND_RETRY_INTERVAL_MS;
   private isStatsbeatSender: boolean;
+  private disableOfflineStorage: boolean;
 
   constructor(options: {
     endpointUrl: string;
@@ -37,16 +38,19 @@ export abstract class BaseSender {
     isStatsbeatSender?: boolean;
   }) {
     this.numConsecutiveRedirects = 0;
+    this.disableOfflineStorage = options.exporterOptions.disableOfflineStorage || false;
     this.persister = new FileSystemPersist(options.instrumentationKey, options.exporterOptions);
     if (options.trackStatsbeat) {
       // Initialize statsbeatMetrics
       this.networkStatsbeatMetrics = new NetworkStatsbeatMetrics({
         instrumentationKey: options.instrumentationKey,
         endpointUrl: options.endpointUrl,
+        disableOfflineStorage: this.disableOfflineStorage,
       });
       this.longIntervalStatsbeatMetrics = getInstance({
         instrumentationKey: options.instrumentationKey,
         endpointUrl: options.endpointUrl,
+        disableOfflineStorage: this.disableOfflineStorage,
       });
     }
     this.retryTimer = null;

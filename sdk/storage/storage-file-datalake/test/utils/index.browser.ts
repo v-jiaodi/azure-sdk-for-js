@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { TokenCredential } from "@azure/core-auth";
 
-import { DataLakeServiceClient } from "../../src";
-import { newPipeline, AnonymousCredential } from "@azure/storage-blob";
+import { DataLakeServiceClient, newPipeline } from "../../src";
+import { AnonymousCredential } from "@azure/storage-blob";
 import { configureStorageClient, SimpleTokenCredential } from "./testutils.common";
 import { env, Recorder } from "@azure-tools/test-recorder";
 

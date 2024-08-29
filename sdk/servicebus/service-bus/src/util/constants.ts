@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 /**
  * @internal
  */
 export const packageJsonInfo = {
   name: "@azure/service-bus",
-  version: "7.9.5",
+  version: "7.10.0",
 };
 
 /**

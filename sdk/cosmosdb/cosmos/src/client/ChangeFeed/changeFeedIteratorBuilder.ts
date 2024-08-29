@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 import { ClientContext } from "../../ClientContext";
 import { PartitionKey } from "../../documents";
 import { QueryRange, PartitionKeyRangeCache } from "../../routing";
@@ -74,8 +74,15 @@ export function changeFeedIteratorBuilder(
     changeFeedStartFrom instanceof ChangeFeedStartFromTime ||
     changeFeedStartFrom instanceof ChangeFeedStartFromBeginning
   ) {
-    const startTime = fetchStartTime(changeFeedStartFrom);
-    const internalCfOptions = buildInternalChangeFeedOptions(cfOptions, undefined, startTime);
+    const startFromNow = changeFeedStartFrom instanceof ChangeFeedStartFromNow ? true : false;
+    const startTime = startFromNow ? undefined : fetchStartTime(changeFeedStartFrom);
+
+    const internalCfOptions = buildInternalChangeFeedOptions(
+      cfOptions,
+      undefined,
+      startTime,
+      startFromNow,
+    );
     const cfResource = changeFeedStartFrom.getCfResource();
     if (isPartitionKey(cfResource)) {
       return new ChangeFeedForPartitionKey(

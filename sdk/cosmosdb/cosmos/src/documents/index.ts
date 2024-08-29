@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 export * from "./ConnectionMode";
 export * from "./ConnectionPolicy";
 export * from "./ConsistencyLevel";
@@ -20,3 +20,5 @@ export * from "./TriggerOperation";
 export * from "./TriggerType";
 export * from "./UserDefinedFunctionType";
 export * from "./GeospatialType";
+export * from "./ComputedProperty";
+export * from "./VectorEmbeddingPolicy";

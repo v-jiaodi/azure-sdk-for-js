@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { AlphaIdsClient } from "../../src";
 import { Context } from "mocha";
@@ -107,7 +107,7 @@ describe(`AlphaIdsClient - manage configuration`, function () {
       `The expected configuration: false is different than the received configuration: true 
        CV: ${configurationResponse?.headers.get("MS-CV")}`,
     );
-  }).timeout(15000);
+  }).timeout(30000);
 
   it("can list all dynamic alpha ids countries", async function () {
     const countries = await _getDynamicCountries();

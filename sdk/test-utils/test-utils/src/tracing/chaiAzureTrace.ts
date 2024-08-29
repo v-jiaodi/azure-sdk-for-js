@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { OperationTracingOptions, useInstrumenter } from "@azure/core-tracing";
 import { SpanGraph, SpanGraphNode } from "./spanGraphModel";
@@ -65,6 +65,7 @@ export async function supportsTracing<
   } finally {
     // By resetting the instrumenter to undefined, we force the next call to instantiate the
     // no-op instrumenter and prevent test pollution.
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     useInstrumenter(<any>undefined);
   }
 }

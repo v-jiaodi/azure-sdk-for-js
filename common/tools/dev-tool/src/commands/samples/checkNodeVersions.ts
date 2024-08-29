@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import fs from "fs-extra";
 import path from "node:path";
@@ -140,7 +140,7 @@ function createDockerContextDirectory(
     try {
       new URL(s);
       return true;
-    } catch (err: any) {
+    } catch (err: unknown) {
       return false;
     }
   };

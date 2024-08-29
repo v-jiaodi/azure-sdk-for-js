@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import {
   Constants,
@@ -236,6 +236,7 @@ export abstract class LinkEntity<LinkT extends Receiver | AwaitableSender | Requ
   ): Promise<void> {
     const checkAborted = (): void => {
       if (abortSignal?.aborted) {
+        this._link?.close();
         throw new AbortError(StandardAbortMessage);
       }
     };

@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 /// <reference lib="esnext.asynciterable" />
 
 import {
@@ -54,6 +54,8 @@ export interface SmsSendOptions extends OperationOptions {
    * Report.
    */
   tag?: string;
+  /** Time to wait for a delivery report. After this time a delivery report with timeout error code is generated. */
+  deliveryReportTimeoutInSeconds?: number;
 }
 
 export interface SmsSendResult {

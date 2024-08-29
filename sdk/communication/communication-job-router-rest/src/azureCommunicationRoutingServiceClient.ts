@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { getClient, ClientOptions } from "@azure-rest/core-client";
 import { isTokenCredential, KeyCredential, TokenCredential } from "@azure/core-auth";
@@ -58,7 +58,7 @@ export default function createClient(
   const { url, credential } = parseClientArguments(connectionStringOrUrl, credentialOrOptions);
   const baseUrl = options?.baseUrl ?? `${url}`;
   options.apiVersion = options.apiVersion ?? "2024-01-18-preview";
-  const userAgentInfo = `azsdk-js-communication-job-router-rest/1.1.0-beta.1`;
+  const userAgentInfo = `azsdk-js-communication-job-router-rest/1.1.0-beta.2`;
   const userAgentPrefix =
     options?.userAgentOptions && options?.userAgentOptions.userAgentPrefix
       ? `${options?.userAgentOptions.userAgentPrefix} ${userAgentInfo}`

@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import path from "node:path";
 import YAML from "yaml";
@@ -115,6 +115,9 @@ function table(info: SampleReadmeConfiguration) {
     const fileName = info.useTypeScript
       ? relativeSourcePath
       : relativeSourcePath.replace(/\.ts$/, ".js");
+    if (summary && summary.includes("|")) {
+      summary = summary.replace(/\|/g, "\\|");
+    }
     return `| [${fileName}][${sampleLinkTag(relativeSourcePath)}] | ${summary} |`;
   });
 

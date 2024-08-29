@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import {
   AvailabilityData,
@@ -45,7 +45,8 @@ export function logToEnvelope(log: ReadableLogRecord, ikey: string): Envelope | 
   const sampleRate = 100;
   const instrumentationKey = ikey;
   const tags = createTagsFromLog(log);
-  const [properties, measurements] = createPropertiesFromLog(log);
+  // eslint-disable-next-line prefer-const
+  let [properties, measurements] = createPropertiesFromLog(log);
   let name: string;
   let baseType: string;
   let baseData: MonitorDomain;
@@ -85,6 +86,7 @@ export function logToEnvelope(log: ReadableLogRecord, ikey: string): Envelope | 
     baseType = String(log.attributes[ApplicationInsightsBaseType]);
     name = getLegacyApplicationInsightsName(log);
     baseData = getLegacyApplicationInsightsBaseData(log);
+    measurements = getLegacyApplicationInsightsMeasurements(log);
     if (!baseData) {
       // Failed to parse log
       return;
@@ -178,6 +180,14 @@ function getLegacyApplicationInsightsName(log: ReadableLogRecord): string {
       break;
   }
   return name;
+}
+
+function getLegacyApplicationInsightsMeasurements(log: ReadableLogRecord): Measurements {
+  let measurements: Measurements = {};
+  if ((log.body as MonitorDomain)?.measurements) {
+    measurements = { ...(log.body as MonitorDomain).measurements };
+  }
+  return measurements;
 }
 
 function getLegacyApplicationInsightsBaseData(log: ReadableLogRecord): MonitorDomain {

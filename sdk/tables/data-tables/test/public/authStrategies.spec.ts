@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { createTableClient, createTableServiceClient } from "./utils/recordedClient";
 
@@ -9,11 +9,11 @@ import { TableClient } from "../../src/TableClient";
 import { TableServiceClient } from "../../src/TableServiceClient";
 import { assert } from "chai";
 import { isLiveMode } from "@azure-tools/test-recorder";
-import { isNode } from "@azure/test-utils";
+import { isNodeLike } from "@azure/core-util";
 import { odata } from "../../src/odata";
 
-const platform = isNode ? "node" : "browser";
-const authMethods: CreateClientMode[] = isNode
+const platform = isNodeLike ? "node" : "browser";
+const authMethods: CreateClientMode[] = isNodeLike
   ? ["AccountKey", "AccountConnectionString", "SASConnectionString", "SASToken", "TokenCredential"]
   : ["SASConnectionString", "SASToken", "TokenCredential"];
 

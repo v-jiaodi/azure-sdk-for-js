@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { createHttpHeaders, PipelineRequest } from "@azure/core-rest-pipeline";
-import { assert } from "@azure/test-utils";
+import { assert } from "@azure-tools/test-utils";
 import { KnownErrorCode } from "../../src/generated";
 import { AnalyzeBatchActionNames } from "../../src/models";
 import { TextAnalysisClient } from "../../src/textAnalysisClient";

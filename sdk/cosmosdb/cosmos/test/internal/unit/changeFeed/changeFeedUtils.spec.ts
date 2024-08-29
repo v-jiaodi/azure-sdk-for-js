@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import assert from "assert";
 import {
@@ -155,10 +155,6 @@ describe("test fetchStartTime", function () {
   it("startTime is beginning", function () {
     const startTime = fetchStartTime(ChangeFeedStartFrom.Beginning());
     assert.equal(startTime, undefined);
-  });
-  it("startTime is now", function () {
-    const startTime = fetchStartTime(ChangeFeedStartFrom.Now());
-    assert.equal(startTime instanceof Date, true);
   });
   it("startTime is time", function () {
     const time = new Date();

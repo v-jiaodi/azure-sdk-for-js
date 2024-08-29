@@ -1,15 +1,15 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { AccessToken, GetTokenOptions, TokenCredential } from "@azure/core-auth";
+import { MsalClient, createMsalClient } from "../msal/nodeFlows/msalClient";
 import {
   processMultiTenantRequest,
   resolveAdditionallyAllowedTenantIds,
 } from "../util/tenantIdUtils";
 
 import { ClientAssertionCredentialOptions } from "./clientAssertionCredentialOptions";
-import { MsalClientAssertion } from "../msal/nodeFlows/msalClientAssertion";
-import { MsalFlow } from "../msal/flows";
+import { CredentialUnavailableError } from "../errors";
 import { credentialLogger } from "../util/logging";
 import { tracingClient } from "../util/tracing";
 
@@ -19,10 +19,10 @@ const logger = credentialLogger("ClientAssertionCredential");
  * Authenticates a service principal with a JWT assertion.
  */
 export class ClientAssertionCredential implements TokenCredential {
-  private msalFlow: MsalFlow;
+  private msalClient: MsalClient;
   private tenantId: string;
   private additionallyAllowedTenantIds: string[];
-  private clientId: string;
+  private getAssertion: () => Promise<string>;
   private options: ClientAssertionCredentialOptions;
 
   /**
@@ -41,24 +41,34 @@ export class ClientAssertionCredential implements TokenCredential {
     getAssertion: () => Promise<string>,
     options: ClientAssertionCredentialOptions = {},
   ) {
-    if (!tenantId || !clientId || !getAssertion) {
-      throw new Error(
-        "ClientAssertionCredential: tenantId, clientId, and clientAssertion are required parameters.",
+    if (!tenantId) {
+      throw new CredentialUnavailableError(
+        "ClientAssertionCredential: tenantId is a required parameter.",
+      );
+    }
+
+    if (!clientId) {
+      throw new CredentialUnavailableError(
+        "ClientAssertionCredential: clientId is a required parameter.",
+      );
+    }
+
+    if (!getAssertion) {
+      throw new CredentialUnavailableError(
+        "ClientAssertionCredential: clientAssertion is a required parameter.",
       );
     }
     this.tenantId = tenantId;
     this.additionallyAllowedTenantIds = resolveAdditionallyAllowedTenantIds(
       options?.additionallyAllowedTenants,
     );
-    this.clientId = clientId;
+
     this.options = options;
-    this.msalFlow = new MsalClientAssertion({
+    this.getAssertion = getAssertion;
+    this.msalClient = createMsalClient(clientId, tenantId, {
       ...options,
       logger,
-      clientId: this.clientId,
-      tenantId: this.tenantId,
       tokenCredentialOptions: this.options,
-      getAssertion,
     });
   }
 
@@ -83,7 +93,11 @@ export class ClientAssertionCredential implements TokenCredential {
         );
 
         const arrayScopes = Array.isArray(scopes) ? scopes : [scopes];
-        return this.msalFlow.getToken(arrayScopes, newOptions);
+        return this.msalClient.getTokenByClientAssertion(
+          arrayScopes,
+          this.getAssertion,
+          newOptions,
+        );
       },
     );
   }

@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 // Chai is the Azure SDK Team's preferred assertion library, and it is included
 // as part of our template project.
@@ -8,7 +8,7 @@ import { assert } from "chai";
 import { calculateDigest } from "../../src/utils/digest";
 import { Readable } from "stream";
 import { parseWWWAuthenticate } from "../../src/utils/wwwAuthenticateParser";
-import { expect } from "@azure/test-utils";
+import { expect } from "@azure-tools/test-utils";
 
 describe("ContainerRegistryClient functional test", async function () {
   ["", null, undefined].forEach((value) => {

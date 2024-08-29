@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { assert } from "chai";
 import { Context } from "mocha";
@@ -22,7 +22,7 @@ import {
   fakeTestSecretPlaceholder,
   getYieldedValue,
   matrix,
-} from "@azure/test-utils";
+} from "@azure-tools/test-utils";
 
 matrix([[true, false]] as const, async (useAad) => {
   describe(`[${useAad ? "AAD" : "API Key"}]`, () => {

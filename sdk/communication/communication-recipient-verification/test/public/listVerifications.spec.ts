@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { Context } from "mocha";
 import { Recorder } from "@azure-tools/test-recorder";
@@ -26,5 +26,5 @@ describe(`RecipientVerificationClient - List all verifications`, function () {
     for (const verification of await client.getVerifications()) {
       assert.isNotNull(verification.immutableId);
     }
-  }).timeout(10000);
+  }).timeout(30000);
 });

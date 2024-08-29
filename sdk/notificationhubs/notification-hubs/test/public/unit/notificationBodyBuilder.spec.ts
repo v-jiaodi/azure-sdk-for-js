@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
+import { describe, it, assert } from "vitest";
 import { createWindowsBadgeNotificationBody } from "../../../src/models/notificationBodyBuilder.js";
-import { assert } from "@azure/test-utils";
 
 describe("createWindowsBadgeNotificationBody", () => {
   it("should handle a notification count", () => {

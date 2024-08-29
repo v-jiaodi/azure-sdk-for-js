@@ -108,6 +108,7 @@
     "eastus",
     "entra",
     "etags",
+    "findsimilars",
     "hnsw",
     "kusto",
     "lcov",
@@ -150,7 +151,13 @@
     "usgovtexas",
     "usgovvirginia",
     "vectorizer",
-    "westus"
+    "westus",
+    "reimaging",
+    "upgradingos",
+    "Cifs",
+    "dataserviceid",
+    "uefi",
+    "Uefi"
   ],
   "allowCompoundWords": true,
   "overrides": [
@@ -188,7 +195,7 @@
         "sipx",
         "ssml",
         "unhold",
-		    "Unhold"
+        "Unhold"
       ]
     },
     {
@@ -258,6 +265,10 @@
       "words": ["Dicom", "Gcch", "gcch"]
     },
     {
+      "filename": "sdk/eventgrid/eventgrid-system-events/review/**/*.md",
+      "words": ["Dicom", "Gcch", "gcch"]
+    },
+    {
       "filename": "sdk/formrecognizer/ai-form-recognizer/README.md",
       "words": ["iddocument"]
     },
@@ -275,12 +286,27 @@
       ]
     },
     {
+      "filename": "sdk/healthdataaiservices/azure-health-deidentification/**",
+      "words": [
+        "deid",
+        "deidservices",
+        "deidentification",
+        "healthdataaiservices",
+        "deidentify",
+        "deidentified"
+      ]
+    },
+    {
       "filename": "sdk/healthinsights/azure-healthinsights-radiologyinsights/**",
       "words": ["ctxt", "mros", "nify"]
     },
     {
       "filename": "sdk/identity/**/*.md",
       "words": ["MSAL", "PKCE"]
+    },
+    {
+      "filename": "sdk/identity/**/*.ts",
+      "words": ["azcmagent", "HIMDS"]
     },
     {
       "filename": "sdk/iot/iot-modelsrepository/review/**/*.md",
@@ -345,6 +371,7 @@
         "rerank",
         "reranker",
         "sorani",
+        "vectorize",
         "vectorizer",
         "vectorizers"
       ]
@@ -386,6 +413,10 @@
     {
       "filename": "sdk/storage/storage-blob/review/storage-blob.api.md",
       "words": ["Uncommited"]
+    },
+    {
+      "filename": "sdk/storage/storage-file-share/review/storage-file-share.api.md",
+      "words": ["Sddl"]
     },
     {
       "filename": "sdk/videoanalyzer/video-analyzer-edge/review/**/*.md",

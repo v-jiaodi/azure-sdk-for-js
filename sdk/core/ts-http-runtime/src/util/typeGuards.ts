@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 /**
  * Helper TypeGuard that checks if something is defined or not.
@@ -54,6 +54,24 @@ export function isWebReadableStream(x: unknown): x is ReadableStream {
     x &&
       typeof (x as ReadableStream).getReader === "function" &&
       typeof (x as ReadableStream).tee === "function",
+  );
+}
+
+export function isBinaryBody(
+  body: unknown,
+): body is
+  | Uint8Array
+  | NodeJS.ReadableStream
+  | ReadableStream<Uint8Array>
+  | (() => NodeJS.ReadableStream)
+  | (() => ReadableStream<Uint8Array>)
+  | Blob {
+  return (
+    body !== undefined &&
+    (body instanceof Uint8Array ||
+      isReadableStream(body) ||
+      typeof body === "function" ||
+      body instanceof Blob)
   );
 }
 

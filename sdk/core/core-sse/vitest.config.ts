@@ -1,16 +1,19 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { defineConfig } from "vitest/config";
 
 export default defineConfig({
   test: {
-    reporters: ["basic", "junit"],
-    outputFile: {
-      junit: "test-results.browser.xml",
+    reporters: ["verbose", "junit"],
+    fileParallelism: false,
+    testTimeout: 30000,
+    typecheck: {
+      enabled: true,
     },
-    fakeTimers: {
-      toFake: ["setTimeout", "Date"],
+    globalSetup: "test/server/start.mts",
+    outputFile: {
+      junit: "test-results.xml",
     },
     watch: false,
     include: ["test/**/*.spec.ts"],

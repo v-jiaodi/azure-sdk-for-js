@@ -1,11 +1,13 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { stringToUint8Array } from "../util/bytesEncoding.js";
+import { isNodeLike } from "../util/checkEnvironment.js";
 import { createHttpHeaders } from "../httpHeaders.js";
 import {
   BodyPart,
   FormDataMap,
+  FormDataValue,
   PipelineRequest,
   PipelineResponse,
   SendRequest,
@@ -17,6 +19,15 @@ import { PipelinePolicy } from "../pipeline.js";
  */
 export const formDataPolicyName = "formDataPolicy";
 
+function formDataToFormDataMap(formData: FormData): FormDataMap {
+  const formDataMap: FormDataMap = {};
+  for (const [key, value] of formData.entries()) {
+    formDataMap[key] ??= [];
+    (formDataMap[key] as FormDataValue[]).push(value);
+  }
+  return formDataMap;
+}
+
 /**
  * A policy that encodes FormData on the request into the body.
  */
@@ -24,6 +35,11 @@ export function formDataPolicy(): PipelinePolicy {
   return {
     name: formDataPolicyName,
     async sendRequest(request: PipelineRequest, next: SendRequest): Promise<PipelineResponse> {
+      if (isNodeLike && typeof FormData !== "undefined" && request.body instanceof FormData) {
+        request.formData = formDataToFormDataMap(request.body);
+        request.body = undefined;
+      }
+
       if (request.formData) {
         const contentType = request.headers.get("Content-Type");
         if (contentType && contentType.indexOf("application/x-www-form-urlencoded") !== -1) {

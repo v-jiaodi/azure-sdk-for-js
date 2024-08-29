@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import {
   Resource,
@@ -62,7 +62,7 @@ export class InternalConfig implements AzureMonitorOpenTelemetryOptions {
     // Default values
     this.azureMonitorExporterOptions = {};
     this.samplingRatio = 1;
-    this.enableLiveMetrics = false;
+    this.enableLiveMetrics = true;
     this.enableStandardMetrics = true;
     this.enableTraceBasedSamplingForLogs = true;
     this.instrumentationOptions = {
@@ -91,19 +91,22 @@ export class InternalConfig implements AzureMonitorOpenTelemetryOptions {
         options.instrumentationOptions,
       );
       this.resource = Object.assign(this.resource, options.resource);
-      this.samplingRatio = options.samplingRatio || this.samplingRatio;
+      this.samplingRatio =
+        options.samplingRatio !== undefined ? options.samplingRatio : this.samplingRatio;
       this.browserSdkLoaderOptions = Object.assign(
         this.browserSdkLoaderOptions,
         options.browserSdkLoaderOptions,
       );
       this.enableLiveMetrics =
-        options.enableLiveMetrics != undefined ? options.enableLiveMetrics : this.enableLiveMetrics;
+        options.enableLiveMetrics !== undefined
+          ? options.enableLiveMetrics
+          : this.enableLiveMetrics;
       this.enableStandardMetrics =
-        options.enableStandardMetrics != undefined
+        options.enableStandardMetrics !== undefined
           ? options.enableStandardMetrics
           : this.enableStandardMetrics;
       this.enableTraceBasedSamplingForLogs =
-        options.enableTraceBasedSamplingForLogs != undefined
+        options.enableTraceBasedSamplingForLogs !== undefined
           ? options.enableTraceBasedSamplingForLogs
           : this.enableTraceBasedSamplingForLogs;
     }
@@ -111,7 +114,7 @@ export class InternalConfig implements AzureMonitorOpenTelemetryOptions {
     this._mergeConfig();
   }
 
-  private _mergeConfig() {
+  private _mergeConfig(): void {
     try {
       const jsonConfig = JsonConfig.getInstance();
       this.samplingRatio =
@@ -166,6 +169,7 @@ export class InternalConfig implements AzureMonitorOpenTelemetryOptions {
     if (vmResource.asyncAttributesPending) {
       vmResource.waitForAsyncAttributes?.().then(() => {
         this._resource = this._resource.merge(vmResource) as Resource;
+        return;
       });
     }
   }

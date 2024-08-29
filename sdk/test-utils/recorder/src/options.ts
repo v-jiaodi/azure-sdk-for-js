@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { createHttpHeaders, createPipelineRequest, HttpClient } from "@azure/core-rest-pipeline";
 import { paths } from "./utils/paths.js";
@@ -15,6 +15,7 @@ export async function setRecordingOptions(
   httpClient: HttpClient,
   { handleRedirects, tlsValidationCert }: RecordingOptions,
 ): Promise<void> {
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const rawBody: Record<string, any> = {
     HandleRedirects: handleRedirects,
   };

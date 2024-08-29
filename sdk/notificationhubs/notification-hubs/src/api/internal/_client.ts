@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import {
   HttpHeaders,
@@ -121,11 +121,7 @@ export async function sendRequest(
     const responseBody = response.bodyAsText;
     let details: string | undefined;
     if (isDefined(responseBody)) {
-      try {
-        details = await parseXMLError(responseBody);
-      } catch (err) {
-        // eslint-disable no-empty
-      }
+      details = await parseXMLError(responseBody);
     }
 
     let errorMessage: string | undefined;

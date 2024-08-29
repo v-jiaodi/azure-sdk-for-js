@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license
+// Licensed under the MIT License
 
 import { copyFile, stat, readFile, writeFile, readdir } from "node:fs/promises";
 import { ensureDir, copy } from "fs-extra";
@@ -61,8 +61,8 @@ async function directoryExists(path: string) {
   try {
     const stats = await stat(path);
     return stats.isDirectory();
-  } catch (error: any) {
-    if (error.code === "ENOENT") {
+  } catch (error: unknown) {
+    if (error instanceof Object && (error as Record<string, unknown>).code === "ENOENT") {
       return false; // Directory does not exist
     } else {
       throw error; // Other error occurred, propagate it

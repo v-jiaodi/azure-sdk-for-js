@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { RestError } from "@azure/core-rest-pipeline";
 
@@ -26,11 +26,11 @@ export {
   newPipeline,
   StoragePipelineOptions,
   ServiceClientOptions,
-} from "../../storage-blob/src/Pipeline";
+} from "./Pipeline";
 export { BaseRequestPolicy } from "../../storage-blob/src/policies/RequestPolicy";
 export * from "../../storage-blob/src/policies/AnonymousCredentialPolicy";
 export * from "../../storage-blob/src/policies/CredentialPolicy";
-export * from "../../storage-blob/src/StorageRetryPolicyFactory";
+export * from "./StorageRetryPolicyFactory";
 export * from "../../storage-blob/src/StorageBrowserPolicyFactory";
 export * from "./ShareServiceClient";
 export { CommonOptions } from "./StorageClient";

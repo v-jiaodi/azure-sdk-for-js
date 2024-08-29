@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { ICachePlugin, INativeBrokerPlugin } from "@azure/msal-node";
 import {
@@ -11,7 +11,7 @@ import {
 
 import { MsalClientOptions } from "../../../src/msal/nodeFlows/msalClient";
 import Sinon from "sinon";
-import { assert } from "@azure/test-utils";
+import { assert } from "@azure-tools/test-utils";
 
 describe("#generatePluginConfiguration", function () {
   let options: MsalClientOptions;
@@ -25,6 +25,7 @@ describe("#generatePluginConfiguration", function () {
     const expected: PluginConfiguration = {
       cache: {},
       broker: {
+        isEnabled: false,
         enableMsaPassthrough: false,
         parentWindowHandle: undefined,
       },
@@ -104,6 +105,7 @@ describe("#generatePluginConfiguration", function () {
       assert.strictEqual(result.broker.nativeBrokerPlugin, nativeBrokerPlugin);
       assert.strictEqual(result.broker.enableMsaPassthrough, true);
       assert.strictEqual(result.broker.parentWindowHandle, parentWindowHandle);
+      assert.strictEqual(result.broker.isEnabled, true);
     });
   });
 });

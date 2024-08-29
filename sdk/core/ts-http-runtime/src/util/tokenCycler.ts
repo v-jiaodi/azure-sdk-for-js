@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { AccessToken, GetTokenOptions, TokenCredential } from "../auth/tokenCredential.js";
 import { delay } from "./helpers.js";
@@ -201,13 +201,23 @@ export function createTokenCycler(
     //   step 1.
     //
 
+    const hasClaimChallenge = Boolean(tokenOptions.claims);
+    const tenantIdChanged = tenantId !== tokenOptions.tenantId;
+
+    if (hasClaimChallenge) {
+      // If we've received a claim, we know the existing token isn't valid
+      // We want to clear it so that that refresh worker won't use the old expiration time as a timeout
+      token = null;
+    }
+
     // If the tenantId passed in token options is different to the one we have
     // Or if we are in claim challenge and the token was rejected and a new access token need to be issued, we need to
     // refresh the token with the new tenantId or token.
-    const mustRefresh =
-      tenantId !== tokenOptions.tenantId || Boolean(tokenOptions.claims) || cycler.mustRefresh;
+    const mustRefresh = tenantIdChanged || hasClaimChallenge || cycler.mustRefresh;
 
-    if (mustRefresh) return refresh(scopes, tokenOptions);
+    if (mustRefresh) {
+      return refresh(scopes, tokenOptions);
+    }
 
     if (cycler.shouldRefresh) {
       refresh(scopes, tokenOptions);

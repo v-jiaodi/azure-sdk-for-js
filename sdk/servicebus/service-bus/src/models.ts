@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { OperationOptionsBase } from "./modelsToBeSharedWithEventHubs";
 import Long from "long";
@@ -325,4 +325,28 @@ export interface PeekMessagesOptions extends OperationOptionsBase {
    * (Experimental for diagnostic purpose) Specifies whether to omit the body when peeking messages. Default  value `false`.
    */
   omitMessageBody?: boolean;
+}
+
+/**
+ * Options to configure messages deletion.
+ */
+export interface DeleteMessagesOptions extends OperationOptionsBase {
+  /**
+   * If specified, only messages enqueued before this time are deleted.
+   */
+  beforeEnqueueTime?: Date;
+  /**
+   * Up to `maxMessageCount` messages will be deleted.
+   */
+  maxMessageCount: number;
+}
+
+/**
+ * Options to configure deletion of all messages in an entity.
+ */
+export interface PurgeMessagesOptions extends OperationOptionsBase {
+  /**
+   * If specified, only messages enqueued before this time are deleted.
+   */
+  beforeEnqueueTime?: Date;
 }

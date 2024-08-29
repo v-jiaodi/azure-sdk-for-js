@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { ServiceBusSender, ServiceBusMessage } from "../../src";
 import { TestClientType } from "../public/utils/testUtils";
@@ -8,7 +8,7 @@ import {
   EntityName,
   createServiceBusClientForTests,
 } from "../public/utils/testutils2";
-import { assert } from "@azure/test-utils";
+import { assert } from "@azure-tools/test-utils";
 
 describe(`Tracing for send`, function (): void {
   let sbClient: ServiceBusClientForTests;

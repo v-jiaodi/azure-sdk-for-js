@@ -1,12 +1,11 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 /**
  * @file Definition of processors
- * @author Arpan Laha
  */
 
-import { Linter } from "eslint";
+import type { Linter } from "eslint";
 
 /**
  * An object containing processors used by the plugin

@@ -1,5 +1,7 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
+
+import { ChangeFeedMode } from "./ChangeFeedMode";
 
 /**
  * @hidden
@@ -13,4 +15,8 @@ export interface InternalChangeFeedIteratorOptions {
   continuationToken?: string;
 
   startTime?: Date;
+
+  changeFeedMode?: ChangeFeedMode;
+
+  startFromNow?: boolean;
 }

@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import {
   getMessageIterator,
@@ -25,7 +25,7 @@ import { Delivery } from "rhea-promise";
 import { MessageAlreadySettled } from "../../../src/util/errors";
 import { assertThrows } from "../../public/utils/testUtils";
 import { AbortError } from "@azure/abort-controller";
-const assert = chai.assert;
+const assert: typeof chai.assert = chai.assert;
 
 describe("shared receiver code", () => {
   describe("translateServiceBusError", () => {

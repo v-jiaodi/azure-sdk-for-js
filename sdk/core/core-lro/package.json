@@ -2,8 +2,8 @@
   "name": "@azure/core-lro",
   "author": "Microsoft Corporation",
   "sdk-type": "client",
+  "version": "3.0.1",
   "type": "module",
-  "version": "2.7.2",
   "description": "Isomorphic client library for supporting long-running operations in node.js and browser.",
   "exports": {
     "./package.json": "./package.json",
@@ -34,6 +34,7 @@
   "main": "./dist/commonjs/index.js",
   "types": "./dist/commonjs/index.d.ts",
   "browser": "./dist/browser/index.js",
+  "react-native": "./dist/react-native/index.js",
   "tags": [
     "isomorphic",
     "browser",
@@ -66,23 +67,23 @@
   "sideEffects": false,
   "scripts": {
     "build:samples": "echo Obsolete",
-    "build:test": "npm run clean && tshy && dev-tool run build-test",
-    "build": "npm run clean && tshy && api-extractor run --local",
+    "build:test": "echo skipped. actual commands inlined in browser test scripts",
+    "build": "npm run clean && tshy && dev-tool run extract-api",
     "check-format": "dev-tool run vendored prettier --list-different --config ../../../.prettierrc.json --ignore-path ../../../.prettierignore \"src/**/*.{ts,cts,mts}\" \"test/**/*.{ts,cts,mts}\" \"*.{js,cjs,mjs,json}\"",
     "clean": "rimraf --glob dist dist-* types *.log browser statistics.html coverage src/**/*.js test/**/*.js",
     "execute:samples": "echo skipped",
-    "extract-api": "tshy && api-extractor run --local",
+    "extract-api": "tshy && dev-tool run extract-api",
     "format": "dev-tool run vendored prettier --write --config ../../../.prettierrc.json --ignore-path ../../../.prettierignore \"src/**/*.{ts,cts,mts}\" \"test/**/*.{ts,cts,mts}\" \"*.{js,cjs,mjs,json}\"",
     "integration-test:browser": "echo skipped",
     "integration-test:node": "echo skipped",
     "integration-test": "npm run integration-test:node && npm run integration-test:browser",
-    "lint:fix": "eslint package.json api-extractor.json src test --ext .ts --ext .cts --ext .mts --fix --fix-type [problem,suggestion]",
-    "lint": "eslint package.json api-extractor.json src test  --ext .ts --ext .cts --ext .mts",
+    "lint:fix": "eslint package.json api-extractor.json src test --fix --fix-type [problem,suggestion]",
+    "lint": "eslint package.json api-extractor.json src test ",
     "pack": "npm pack 2>&1",
-    "test:browser": "npm run build:test && npm run unit-test:browser && npm run integration-test:browser",
-    "test:node": "npm run build:test && npm run unit-test:node && npm run integration-test:node",
-    "test": "npm run build:test && npm run unit-test",
-    "unit-test:browser": "npm run build:test && dev-tool run test:vitest --no-test-proxy --browser",
+    "test:browser": "npm run unit-test:browser && npm run integration-test:browser",
+    "test:node": "npm run unit-test:node && npm run integration-test:node",
+    "test": "npm run unit-test",
+    "unit-test:browser": "npm run clean && tshy && dev-tool run build-test && dev-tool run test:vitest --no-test-proxy --browser",
     "unit-test:node": "dev-tool run test:vitest --no-test-proxy",
     "unit-test": "npm run unit-test:node && npm run unit-test:browser"
   },
@@ -98,15 +99,14 @@
     "@azure/dev-tool": "^1.0.0",
     "@microsoft/api-extractor": "^7.40.3",
     "@types/node": "^18.0.0",
-    "@vitest/browser": "^1.3.1",
-    "@vitest/coverage-istanbul": "^1.3.1",
-    "eslint": "^8.56.0",
+    "@vitest/browser": "^2.0.5",
+    "@vitest/coverage-istanbul": "^2.0.5",
+    "eslint": "^9.9.0",
     "playwright": "^1.41.2",
-    "prettier": "^3.2.5",
     "rimraf": "^5.0.5",
-    "tshy": "^1.13.0",
-    "typescript": "~5.3.3",
-    "vitest": "^1.3.1"
+    "tshy": "^2.0.0",
+    "typescript": "~5.5.3",
+    "vitest": "^2.0.5"
   },
   "//metadata": {
     "migrationDate": "2023-03-08T18:36:03.000Z"
@@ -125,5 +125,6 @@
       "react-native"
     ],
     "selfLink": false
-  }
+  },
+  "module": "./dist/esm/index.js"
 }

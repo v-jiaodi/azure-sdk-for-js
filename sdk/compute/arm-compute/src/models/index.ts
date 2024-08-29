@@ -211,6 +211,39 @@ export interface AutomaticOSUpgradePolicy {
   osRollingUpgradeDeferral?: boolean;
 }
 
+/** Specifies Redeploy, Reboot and ScheduledEventsAdditionalPublishingTargets Scheduled Event related configurations. */
+export interface ScheduledEventsPolicy {
+  /** The configuration parameters used while creating userInitiatedRedeploy scheduled event setting creation. */
+  userInitiatedRedeploy?: UserInitiatedRedeploy;
+  /** The configuration parameters used while creating userInitiatedReboot scheduled event setting creation. */
+  userInitiatedReboot?: UserInitiatedReboot;
+  /** The configuration parameters used while publishing scheduledEventsAdditionalPublishingTargets. */
+  scheduledEventsAdditionalPublishingTargets?: ScheduledEventsAdditionalPublishingTargets;
+}
+
+/** Specifies Redeploy related Scheduled Event related configurations. */
+export interface UserInitiatedRedeploy {
+  /** Specifies Redeploy Scheduled Event related configurations. */
+  automaticallyApprove?: boolean;
+}
+
+/** Specifies Reboot related Scheduled Event related configurations. */
+export interface UserInitiatedReboot {
+  /** Specifies Reboot Scheduled Event related configurations. */
+  automaticallyApprove?: boolean;
+}
+
+export interface ScheduledEventsAdditionalPublishingTargets {
+  /** The configuration parameters used while creating eventGridAndResourceGraph Scheduled Event setting. */
+  eventGridAndResourceGraph?: EventGridAndResourceGraph;
+}
+
+/** Specifies eventGridAndResourceGraph related Scheduled Event related configurations. */
+export interface EventGridAndResourceGraph {
+  /** Specifies if event grid and resource graph is enabled for Scheduled event related configurations. */
+  enable?: boolean;
+}
+
 /** Specifies the configuration parameters for automatic repairs on the virtual machine scale set. */
 export interface AutomaticRepairsPolicy {
   /** Specifies whether automatic repairs should be enabled on the virtual machine scale set. The default value is false. */
@@ -255,10 +288,10 @@ export interface VirtualMachineScaleSetVMProfile {
   hardwareProfile?: VirtualMachineScaleSetHardwareProfile;
   /** Specifies the service artifact reference id used to set same image version for all virtual machines in the scale set when using 'latest' image version. Minimum api-version: 2022-11-01 */
   serviceArtifactReference?: ServiceArtifactReference;
-  /** Specifies the security posture to be used for all virtual machines in the scale set. Minimum api-version: 2023-03-01 */
+  /** Specifies the security posture to be used in the scale set. Minimum api-version: 2023-03-01 */
   securityPostureReference?: SecurityPostureReference;
   /**
-   * Specifies the time in which this VM profile for the Virtual Machine Scale Set was created. Minimum API version for this property is 2023-09-01. This value will be added to VMSS Flex VM tags when creating/updating the VMSS VM Profile with minimum api-version 2023-09-01.
+   * Specifies the time in which this VM profile for the Virtual Machine Scale Set was created. This value will be added to VMSS Flex VM tags when creating/updating the VMSS VM Profile. Minimum API version for this property is 2023-09-01.
    * NOTE: This property will not be serialized. It can only be populated by the server.
    */
   readonly timeCreated?: Date;
@@ -300,8 +333,11 @@ export interface WindowsConfiguration {
   patchSettings?: PatchSettings;
   /** Specifies the Windows Remote Management listeners. This enables remote Windows PowerShell. */
   winRM?: WinRMConfiguration;
-  /** Indicates whether VMAgent Platform Updates is enabled for the Windows virtual machine. Default value is false. */
-  enableVMAgentPlatformUpdates?: boolean;
+  /**
+   * Indicates whether VMAgent Platform Updates are enabled for the Windows Virtual Machine.
+   * NOTE: This property will not be serialized. It can only be populated by the server.
+   */
+  readonly enableVMAgentPlatformUpdates?: boolean;
 }
 
 /** Specifies additional XML formatted information that can be included in the Unattend.xml file, which is used by Windows Setup. Contents are defined by setting name, component name, and the pass in which the content is applied. */
@@ -458,7 +494,7 @@ export interface VirtualMachineScaleSetOSDisk {
 export interface DiffDiskSettings {
   /** Specifies the ephemeral disk settings for operating system disk. */
   option?: DiffDiskOptions;
-  /** Specifies the ephemeral disk placement for operating system disk. Possible values are: **CacheDisk,** **ResourceDisk.** The defaulting behavior is: **CacheDisk** if one is configured for the VM size otherwise **ResourceDisk** is used. Refer to the VM size documentation for Windows VM at https://docs.microsoft.com/azure/virtual-machines/windows/sizes and Linux VM at https://docs.microsoft.com/azure/virtual-machines/linux/sizes to check which VM sizes exposes a cache disk. */
+  /** Specifies the ephemeral disk placement for operating system disk. Possible values are: **CacheDisk,** **ResourceDisk,** **NvmeDisk.** The defaulting behavior is: **CacheDisk** if one is configured for the VM size otherwise **ResourceDisk** or **NvmeDisk** is used. Refer to the VM size documentation for Windows VM at https://docs.microsoft.com/azure/virtual-machines/windows/sizes and Linux VM at https://docs.microsoft.com/azure/virtual-machines/linux/sizes to check which VM sizes exposes a cache disk. Minimum api-version for NvmeDisk: 2024-03-01. */
   placement?: DiffDiskPlacement;
 }
 
@@ -777,63 +813,14 @@ export interface ServiceArtifactReference {
   id?: string;
 }
 
-/** Specifies the security posture to be used for all virtual machines in the scale set. Minimum api-version: 2023-03-01 */
+/** Specifies the security posture to be used in the scale set. Minimum api-version: 2023-03-01 */
 export interface SecurityPostureReference {
-  /** The security posture reference id in the form of /CommunityGalleries/{communityGalleryName}/securityPostures/{securityPostureName}/versions/{major.minor.patch}|{major.*}|latest */
-  id?: string;
-  /** List of virtual machine extensions to exclude when applying the Security Posture. */
-  excludeExtensions?: VirtualMachineExtension[];
-}
-
-/** The instance view of a virtual machine extension. */
-export interface VirtualMachineExtensionInstanceView {
-  /** The virtual machine extension name. */
-  name?: string;
-  /** Specifies the type of the extension; an example is "CustomScriptExtension". */
-  type?: string;
-  /** Specifies the version of the script handler. */
-  typeHandlerVersion?: string;
-  /** The resource status information. */
-  substatuses?: InstanceViewStatus[];
-  /** The resource status information. */
-  statuses?: InstanceViewStatus[];
-}
-
-/** Instance view status. */
-export interface InstanceViewStatus {
-  /** The status code. */
-  code?: string;
-  /** The level code. */
-  level?: StatusLevelTypes;
-  /** The short localizable label for the status. */
-  displayStatus?: string;
-  /** The detailed status message, including for alerts and error messages. */
-  message?: string;
-  /** The time of the status. */
-  time?: Date;
-}
-
-/** The Resource model definition with location property as optional. */
-export interface ResourceWithOptionalLocation {
-  /** Resource location */
-  location?: string;
-  /**
-   * Resource Id
-   * NOTE: This property will not be serialized. It can only be populated by the server.
-   */
-  readonly id?: string;
-  /**
-   * Resource name
-   * NOTE: This property will not be serialized. It can only be populated by the server.
-   */
-  readonly name?: string;
-  /**
-   * Resource type
-   * NOTE: This property will not be serialized. It can only be populated by the server.
-   */
-  readonly type?: string;
-  /** Resource tags */
-  tags?: { [propertyName: string]: string };
+  /** The security posture reference id in the form of /CommunityGalleries/{communityGalleryName}/securityPostures/{securityPostureName}/versions/{major.minor.patch}|latest */
+  id: string;
+  /** The list of virtual machine extension names to exclude when applying the security posture. */
+  excludeExtensions?: string[];
+  /** Whether the security posture can be overridden by the user. */
+  isOverridable?: boolean;
 }
 
 /** Enables or disables a capability on the virtual machine or virtual machine scale set. */
@@ -886,6 +873,20 @@ export interface ResilientVMCreationPolicy {
 export interface ResilientVMDeletionPolicy {
   /** Specifies whether resilient VM deletion should be enabled on the virtual machine scale set. The default value is false. */
   enabled?: boolean;
+}
+
+/** Specifies the sku profile for the virtual machine scale set. With this property the customer is able to specify a list of VM sizes and an allocation strategy. */
+export interface SkuProfile {
+  /** Specifies the VM sizes for the virtual machine scale set. */
+  vmSizes?: SkuProfileVMSize[];
+  /** Specifies the allocation strategy for the virtual machine scale set based on which the VMs will be allocated. */
+  allocationStrategy?: AllocationStrategy;
+}
+
+/** Specifies the VM Size. */
+export interface SkuProfileVMSize {
+  /** Specifies the name of the VM Size. */
+  name?: string;
 }
 
 /** Identity for the virtual machine scale set. */
@@ -960,6 +961,8 @@ export interface VirtualMachineScaleSetUpdateVMProfile {
   storageProfile?: VirtualMachineScaleSetUpdateStorageProfile;
   /** The virtual machine scale set network profile. */
   networkProfile?: VirtualMachineScaleSetUpdateNetworkProfile;
+  /** The virtual machine scale set security posture reference. */
+  securityPostureReference?: SecurityPostureReferenceUpdate;
   /** The virtual machine scale set Security profile */
   securityProfile?: SecurityProfile;
   /** The virtual machine scale set diagnostics profile. */
@@ -1007,6 +1010,8 @@ export interface VirtualMachineScaleSetUpdateOSDisk {
   caching?: CachingTypes;
   /** Specifies whether writeAccelerator should be enabled or disabled on the disk. */
   writeAcceleratorEnabled?: boolean;
+  /** Specifies the ephemeral disk Settings for the operating system disk used by the virtual machine scale set. */
+  diffDiskSettings?: DiffDiskSettings;
   /** Specifies the size of an empty data disk in gigabytes. This element can be used to overwrite the size of the disk in a virtual machine image. <br><br> diskSizeGB is the number of bytes x 1024^3 for the disk and the value cannot be larger than 1023 */
   diskSizeGB?: number;
   /** The Source User Image VirtualHardDisk. This VirtualHardDisk will be copied before using it to attach to the Virtual Machine. If SourceImage is provided, the destination VirtualHardDisk should not exist. */
@@ -1093,6 +1098,16 @@ export interface VirtualMachineScaleSetUpdatePublicIPAddressConfiguration {
   deleteOption?: DeleteOptions;
 }
 
+/** Specifies the security posture to be used in the scale set. Minimum api-version: 2023-03-01 */
+export interface SecurityPostureReferenceUpdate {
+  /** The security posture reference id in the form of /CommunityGalleries/{communityGalleryName}/securityPostures/{securityPostureName}/versions/{major.minor.patch}|latest */
+  id?: string;
+  /** The list of virtual machine extension names to exclude when applying the security posture. */
+  excludeExtensions?: string[];
+  /** Whether the security posture can be overridden by the user. */
+  isOverridable?: boolean;
+}
+
 /** The Update Resource model definition. */
 export interface UpdateResource {
   /** Resource tags */
@@ -1167,6 +1182,20 @@ export interface VirtualMachineScaleSetVMExtensionsSummary {
    * NOTE: This property will not be serialized. It can only be populated by the server.
    */
   readonly statusesSummary?: VirtualMachineStatusCodeCount[];
+}
+
+/** Instance view status. */
+export interface InstanceViewStatus {
+  /** The status code. */
+  code?: string;
+  /** The level code. */
+  level?: StatusLevelTypes;
+  /** The short localizable label for the status. */
+  displayStatus?: string;
+  /** The detailed status message, including for alerts and error messages. */
+  message?: string;
+  /** The time of the status. */
+  time?: Date;
 }
 
 /** Summary for an orchestration service of a virtual machine scale set. */
@@ -1442,6 +1471,20 @@ export interface OrchestrationServiceStateInput {
   action: OrchestrationServiceStateAction;
 }
 
+/** The instance view of a virtual machine extension. */
+export interface VirtualMachineExtensionInstanceView {
+  /** The virtual machine extension name. */
+  name?: string;
+  /** Specifies the type of the extension; an example is "CustomScriptExtension". */
+  type?: string;
+  /** Specifies the version of the script handler. */
+  typeHandlerVersion?: string;
+  /** The resource status information. */
+  substatuses?: InstanceViewStatus[];
+  /** The resource status information. */
+  statuses?: InstanceViewStatus[];
+}
+
 /** The List VMSS VM Extension operation response */
 export interface VirtualMachineScaleSetVMExtensionsListResult {
   /** The list of VMSS VM extensions */
@@ -1622,7 +1665,7 @@ export interface OSDisk {
   writeAcceleratorEnabled?: boolean;
   /** Specifies the ephemeral Disk Settings for the operating system disk used by the virtual machine. */
   diffDiskSettings?: DiffDiskSettings;
-  /** Specifies how the virtual machine should be created. Possible values are: **Attach.** This value is used when you are using a specialized disk to create the virtual machine. **FromImage.** This value is used when you are using an image to create the virtual machine. If you are using a platform image, you should also use the imageReference element described above. If you are using a marketplace image, you should also use the plan element previously described. */
+  /** Specifies how the virtual machine disk should be created. Possible values are **Attach:** This value is used when you are using a specialized disk to create the virtual machine. **FromImage:** This value is used when you are using an image to create the virtual machine. If you are using a platform image, you should also use the imageReference element described above. If you are using a marketplace image, you should also use the plan element previously described. */
   createOption: DiskCreateOptionTypes;
   /** Specifies the size of an empty data disk in gigabytes. This element can be used to overwrite the size of the disk in a virtual machine image. The property 'diskSizeGB' is the number of bytes x 1024^3 for the disk and the value cannot be larger than 1023. */
   diskSizeGB?: number;
@@ -1646,12 +1689,14 @@ export interface DataDisk {
   caching?: CachingTypes;
   /** Specifies whether writeAccelerator should be enabled or disabled on the disk. */
   writeAcceleratorEnabled?: boolean;
-  /** Specifies how the virtual machine should be created. Possible values are: **Attach.** This value is used when you are using a specialized disk to create the virtual machine. **FromImage.** This value is used when you are using an image to create the virtual machine. If you are using a platform image, you should also use the imageReference element described above. If you are using a marketplace image, you should also use the plan element previously described. */
+  /** Specifies how the virtual machine disk should be created. Possible values are **Attach:** This value is used when you are using a specialized disk to create the virtual machine. **FromImage:** This value is used when you are using an image to create the virtual machine data disk. If you are using a platform image, you should also use the imageReference element described above. If you are using a marketplace image, you should also use the plan element previously described. **Empty:** This value is used when creating an empty data disk. **Copy:** This value is used to create a data disk from a snapshot or another disk. **Restore:** This value is used to create a data disk from a disk restore point. */
   createOption: DiskCreateOptionTypes;
   /** Specifies the size of an empty data disk in gigabytes. This element can be used to overwrite the size of the disk in a virtual machine image. The property 'diskSizeGB' is the number of bytes x 1024^3 for the disk and the value cannot be larger than 1023. */
   diskSizeGB?: number;
   /** The managed disk parameters. */
   managedDisk?: ManagedDiskParameters;
+  /** The source resource identifier. It can be a snapshot, or disk restore point from which to create a disk. */
+  sourceResource?: ApiEntityReference;
   /** Specifies whether the data disk is in process of detachment from the VirtualMachine/VirtualMachineScaleset */
   toBeDetached?: boolean;
   /**
@@ -1809,6 +1854,29 @@ export interface VirtualMachineScaleSetVMProtectionPolicy {
   protectFromScaleSetActions?: boolean;
 }
 
+/** The Resource model definition with location property as optional. */
+export interface ResourceWithOptionalLocation {
+  /** Resource location */
+  location?: string;
+  /**
+   * Resource Id
+   * NOTE: This property will not be serialized. It can only be populated by the server.
+   */
+  readonly id?: string;
+  /**
+   * Resource name
+   * NOTE: This property will not be serialized. It can only be populated by the server.
+   */
+  readonly name?: string;
+  /**
+   * Resource type
+   * NOTE: This property will not be serialized. It can only be populated by the server.
+   */
+  readonly type?: string;
+  /** Resource tags */
+  tags?: { [propertyName: string]: string };
+}
+
 /** Identity for the virtual machine. */
 export interface VirtualMachineIdentity {
   /**
@@ -1865,6 +1933,14 @@ export interface DataDisksToAttach {
   diskId: string;
   /** The logical unit number of the data disk. This value is used to identify data disks within the VM and therefore must be unique for each data disk attached to a VM. If not specified, lun would be auto assigned. */
   lun?: number;
+  /** Specifies the caching requirements. Possible values are: **None,** **ReadOnly,** **ReadWrite.** The defaulting behavior is: **None for Standard storage. ReadOnly for Premium storage.** */
+  caching?: CachingTypes;
+  /** Specifies whether data disk should be deleted or detached upon VM deletion. Possible values are: **Delete.** If this value is used, the data disk is deleted when VM is deleted. **Detach.** If this value is used, the data disk is retained after VM is deleted. The default value is set to **Detach**. */
+  deleteOption?: DiskDeleteOptionTypes;
+  /** Specifies the customer managed disk encryption set resource id for the managed disk. */
+  diskEncryptionSet?: DiskEncryptionSetParameters;
+  /** Specifies whether writeAccelerator should be enabled or disabled on the disk. */
+  writeAcceleratorEnabled?: boolean;
 }
 
 /** Describes the data disk to be detached. */
@@ -2925,7 +3001,7 @@ export interface DiskSku {
 }
 
 /** Used for establishing the purchase context of any 3rd Party artifact through MarketPlace. */
-export interface PurchasePlanAutoGenerated {
+export interface DiskPurchasePlan {
   /** The plan ID. */
   name: string;
   /** The publisher ID. */
@@ -3094,7 +3170,7 @@ export interface DiskUpdate {
   /** Set to true to enable bursting beyond the provisioned performance target of the disk. Bursting is disabled by default. Does not apply to Ultra disks. */
   burstingEnabled?: boolean;
   /** Purchase plan information to be added on the OS disk */
-  purchasePlan?: PurchasePlanAutoGenerated;
+  purchasePlan?: DiskPurchasePlan;
   /** List of supported capabilities to be added on the OS disk. */
   supportedCapabilities?: SupportedCapabilities;
   /**
@@ -5077,39 +5153,6 @@ export interface DiskRestorePointAttributes extends SubResourceReadOnly {
   sourceDiskRestorePoint?: ApiEntityReference;
 }
 
-/** Describes a Virtual Machine Extension. */
-export interface VirtualMachineExtension extends ResourceWithOptionalLocation {
-  /** How the extension handler should be forced to update even if the extension configuration has not changed. */
-  forceUpdateTag?: string;
-  /** The name of the extension handler publisher. */
-  publisher?: string;
-  /** Specifies the type of the extension; an example is "CustomScriptExtension". */
-  typePropertiesType?: string;
-  /** Specifies the version of the script handler. */
-  typeHandlerVersion?: string;
-  /** Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. */
-  autoUpgradeMinorVersion?: boolean;
-  /** Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available. */
-  enableAutomaticUpgrade?: boolean;
-  /** Json formatted public settings for the extension. */
-  settings?: any;
-  /** The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. */
-  protectedSettings?: any;
-  /**
-   * The provisioning state, which only appears in the response.
-   * NOTE: This property will not be serialized. It can only be populated by the server.
-   */
-  readonly provisioningState?: string;
-  /** The virtual machine extension instance view. */
-  instanceView?: VirtualMachineExtensionInstanceView;
-  /** Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. */
-  suppressFailures?: boolean;
-  /** The extensions protected settings that are passed by reference, and consumed from key vault */
-  protectedSettingsFromKeyVault?: KeyVaultSecretReference;
-  /** Collection of extension names after which this extension needs to be provisioned. */
-  provisionAfterExtensions?: string[];
-}
-
 /** Describes a Virtual Machine Scale Set. */
 export interface VirtualMachineScaleSet extends Resource {
   /** The virtual machine scale set sku. */
@@ -5118,7 +5161,7 @@ export interface VirtualMachineScaleSet extends Resource {
   plan?: Plan;
   /** The identity of the virtual machine scale set, if configured. */
   identity?: VirtualMachineScaleSetIdentity;
-  /** The virtual machine scale set zones. NOTE: Availability zones can only be set when you create the scale set */
+  /** The virtual machine scale set zones. */
   zones?: string[];
   /** The extended location of the Virtual Machine Scale Set. */
   extendedLocation?: ExtendedLocation;
@@ -5129,6 +5172,8 @@ export interface VirtualMachineScaleSet extends Resource {
   readonly etag?: string;
   /** The upgrade policy. */
   upgradePolicy?: UpgradePolicy;
+  /** The ScheduledEventsPolicy. */
+  scheduledEventsPolicy?: ScheduledEventsPolicy;
   /** Policy for automatic repairs. */
   automaticRepairsPolicy?: AutomaticRepairsPolicy;
   /** The virtual machine profile. */
@@ -5176,6 +5221,10 @@ export interface VirtualMachineScaleSet extends Resource {
   constrainedMaximumCapacity?: boolean;
   /** Policy for Resiliency */
   resiliencyPolicy?: ResiliencyPolicy;
+  /** Specifies the align mode between Virtual Machine Scale Set compute and storage Fault Domain count. */
+  zonalPlatformFaultDomainAlignMode?: ZonalPlatformFaultDomainAlignMode;
+  /** Specifies the sku profile for the virtual machine scale set. */
+  skuProfile?: SkuProfile;
 }
 
 /** The status of the latest virtual machine scale set rolling upgrade. */
@@ -5280,10 +5329,10 @@ export interface VirtualMachineScaleSetVM extends Resource {
   readonly modelDefinitionApplied?: string;
   /** Specifies the protection policy of the virtual machine. */
   protectionPolicy?: VirtualMachineScaleSetVMProtectionPolicy;
-  /** UserData for the VM, which must be base-64 encoded. Customer should not pass any secrets in here. <br><br>Minimum api-version: 2021-03-01 */
+  /** UserData for the VM, which must be base-64 encoded. Customer should not pass any secrets in here. Minimum api-version: 2021-03-01 */
   userData?: string;
   /**
-   * Specifies the time at which the Virtual Machine resource was created.<br><br>Minimum api-version: 2021-11-01.
+   * Specifies the time at which the Virtual Machine resource was created. Minimum api-version: 2021-11-01.
    * NOTE: This property will not be serialized. It can only be populated by the server.
    */
   readonly timeCreated?: Date;
@@ -5316,6 +5365,8 @@ export interface VirtualMachine extends Resource {
   readonly etag?: string;
   /** Specifies the hardware settings for the virtual machine. */
   hardwareProfile?: HardwareProfile;
+  /** Specifies Redeploy, Reboot and ScheduledEventsAdditionalPublishingTargets Scheduled Event related configurations for the virtual machine. */
+  scheduledEventsPolicy?: ScheduledEventsPolicy;
   /** Specifies the storage settings for the virtual machine disks. */
   storageProfile?: StorageProfile;
   /** Specifies additional capabilities enabled or disabled on the virtual machine. */
@@ -5411,6 +5462,8 @@ export interface AvailabilitySet extends Resource {
    * NOTE: This property will not be serialized. It can only be populated by the server.
    */
   readonly statuses?: InstanceViewStatus[];
+  /** Specifies Redeploy, Reboot and ScheduledEventsAdditionalPublishingTargets Scheduled Event related configurations for the availability set. */
+  scheduledEventsPolicy?: ScheduledEventsPolicy;
 }
 
 /** Specifies information about the proximity placement group. */
@@ -5680,7 +5733,7 @@ export interface Disk extends Resource {
   /** The hypervisor generation of the Virtual Machine. Applicable to OS disks only. */
   hyperVGeneration?: HyperVGeneration;
   /** Purchase plan information for the the image from which the OS disk was created. E.g. - {name: 2019-Datacenter, publisher: MicrosoftWindowsServer, product: WindowsServer} */
-  purchasePlan?: PurchasePlanAutoGenerated;
+  purchasePlan?: DiskPurchasePlan;
   /** List of supported capabilities for the image from which the OS disk was created. */
   supportedCapabilities?: SupportedCapabilities;
   /** Disk source information. CreationData information cannot be changed after the disk has been created. */
@@ -5839,7 +5892,7 @@ export interface Snapshot extends Resource {
   /** The hypervisor generation of the Virtual Machine. Applicable to OS disks only. */
   hyperVGeneration?: HyperVGeneration;
   /** Purchase plan information for the image from which the source disk for the snapshot was originally created. */
-  purchasePlan?: PurchasePlanAutoGenerated;
+  purchasePlan?: DiskPurchasePlan;
   /** List of supported capabilities for the image from which the source disk from the snapshot was originally created. */
   supportedCapabilities?: SupportedCapabilities;
   /** Disk source information. CreationData information cannot be changed after the disk has been created. */
@@ -6020,6 +6073,8 @@ export interface VirtualMachineScaleSetUpdate extends UpdateResource {
   plan?: Plan;
   /** The identity of the virtual machine scale set, if configured. */
   identity?: VirtualMachineScaleSetIdentity;
+  /** The virtual machine scale set zones. */
+  zones?: string[];
   /** The upgrade policy. */
   upgradePolicy?: UpgradePolicy;
   /** Policy for automatic repairs. */
@@ -6044,6 +6099,10 @@ export interface VirtualMachineScaleSetUpdate extends UpdateResource {
   spotRestorePolicy?: SpotRestorePolicy;
   /** Policy for Resiliency */
   resiliencyPolicy?: ResiliencyPolicy;
+  /** Specifies the align mode between Virtual Machine Scale Set compute and storage Fault Domain count. */
+  zonalPlatformFaultDomainAlignMode?: ZonalPlatformFaultDomainAlignMode;
+  /** Specifies the sku profile for the virtual machine scale set. */
+  skuProfile?: SkuProfile;
 }
 
 /** Describes a Virtual Machine Extension. */
@@ -6080,6 +6139,8 @@ export interface VirtualMachineUpdate extends UpdateResource {
   zones?: string[];
   /** Specifies the hardware settings for the virtual machine. */
   hardwareProfile?: HardwareProfile;
+  /** Specifies Redeploy, Reboot and ScheduledEventsAdditionalPublishingTargets Scheduled Event related configurations for the virtual machine. */
+  scheduledEventsPolicy?: ScheduledEventsPolicy;
   /** Specifies the storage settings for the virtual machine disks. */
   storageProfile?: StorageProfile;
   /** Specifies additional capabilities enabled or disabled on the virtual machine. */
@@ -6161,6 +6222,8 @@ export interface AvailabilitySetUpdate extends UpdateResource {
    * NOTE: This property will not be serialized. It can only be populated by the server.
    */
   readonly statuses?: InstanceViewStatus[];
+  /** Specifies Redeploy, Reboot and ScheduledEventsAdditionalPublishingTargets Scheduled Event related configurations for the availability set. */
+  scheduledEventsPolicy?: ScheduledEventsPolicy;
 }
 
 /** Specifies information about the proximity placement group. */
@@ -6374,7 +6437,43 @@ export interface VirtualMachineRunCommandUpdate extends UpdateResource {
 
 /** Describes a Virtual Machine Scale Set VM Reimage Parameters. */
 export interface VirtualMachineScaleSetVMReimageParameters
-  extends VirtualMachineReimageParameters {}
+  extends VirtualMachineReimageParameters {
+  /** Parameter to force update ephemeral OS disk for a virtual machine scale set VM */
+  forceUpdateOSDiskForEphemeral?: boolean;
+}
+
+/** Describes a Virtual Machine Extension. */
+export interface VirtualMachineExtension extends ResourceWithOptionalLocation {
+  /** How the extension handler should be forced to update even if the extension configuration has not changed. */
+  forceUpdateTag?: string;
+  /** The name of the extension handler publisher. */
+  publisher?: string;
+  /** Specifies the type of the extension; an example is "CustomScriptExtension". */
+  typePropertiesType?: string;
+  /** Specifies the version of the script handler. */
+  typeHandlerVersion?: string;
+  /** Indicates whether the extension should use a newer minor version if one is available at deployment time. Once deployed, however, the extension will not upgrade minor versions unless redeployed, even with this property set to true. */
+  autoUpgradeMinorVersion?: boolean;
+  /** Indicates whether the extension should be automatically upgraded by the platform if there is a newer version of the extension available. */
+  enableAutomaticUpgrade?: boolean;
+  /** Json formatted public settings for the extension. */
+  settings?: any;
+  /** The extension can contain either protectedSettings or protectedSettingsFromKeyVault or no protected settings at all. */
+  protectedSettings?: any;
+  /**
+   * The provisioning state, which only appears in the response.
+   * NOTE: This property will not be serialized. It can only be populated by the server.
+   */
+  readonly provisioningState?: string;
+  /** The virtual machine extension instance view. */
+  instanceView?: VirtualMachineExtensionInstanceView;
+  /** Indicates whether failures stemming from the extension will be suppressed (Operational failures such as not connecting to the VM will not be suppressed regardless of this value). The default is false. */
+  suppressFailures?: boolean;
+  /** The extensions protected settings that are passed by reference, and consumed from key vault */
+  protectedSettingsFromKeyVault?: KeyVaultSecretReference;
+  /** Collection of extension names after which this extension needs to be provisioned. */
+  provisionAfterExtensions?: string[];
+}
 
 /** The instance view of a dedicated host that includes the name of the dedicated host. It is used for the response to the instance view of a dedicated host group. */
 export interface DedicatedHostInstanceViewWithName
@@ -6471,7 +6570,7 @@ export interface DiskRestorePoint extends ProxyOnlyResource {
   /** The hypervisor generation of the Virtual Machine. Applicable to OS disks only. */
   hyperVGeneration?: HyperVGeneration;
   /** Purchase plan information for the the image from which the OS disk was created. */
-  purchasePlan?: PurchasePlanAutoGenerated;
+  purchasePlan?: DiskPurchasePlan;
   /** List of supported capabilities for the image from which the OS disk was created. */
   supportedCapabilities?: SupportedCapabilities;
   /**
@@ -6511,6 +6610,11 @@ export interface DiskRestorePoint extends ProxyOnlyResource {
   readonly sourceResourceLocation?: string;
   /** Contains the security related information for the resource. */
   securityProfile?: DiskSecurityProfile;
+  /**
+   * Logical sector size in bytes for disk restore points of UltraSSD_LRS and PremiumV2_LRS disks. Supported values are 512 and 4096. 4096 is the default.
+   * NOTE: This property will not be serialized. It can only be populated by the server.
+   */
+  readonly logicalSectorSize?: number;
 }
 
 /** Specifies information about the Shared Image Gallery that you want to update. */
@@ -7044,6 +7148,10 @@ export enum KnownDiskCreateOptionTypes {
   Empty = "Empty",
   /** Attach */
   Attach = "Attach",
+  /** Copy */
+  Copy = "Copy",
+  /** Restore */
+  Restore = "Restore",
 }
 
 /**
@@ -7053,7 +7161,9 @@ export enum KnownDiskCreateOptionTypes {
  * ### Known values supported by the service
  * **FromImage** \
  * **Empty** \
- * **Attach**
+ * **Attach** \
+ * **Copy** \
+ * **Restore**
  */
 export type DiskCreateOptionTypes = string;
 
@@ -7078,6 +7188,8 @@ export enum KnownDiffDiskPlacement {
   CacheDisk = "CacheDisk",
   /** ResourceDisk */
   ResourceDisk = "ResourceDisk",
+  /** NvmeDisk */
+  NvmeDisk = "NvmeDisk",
 }
 
 /**
@@ -7086,7 +7198,8 @@ export enum KnownDiffDiskPlacement {
  *  this enum contains the known values that the service supports.
  * ### Known values supported by the service
  * **CacheDisk** \
- * **ResourceDisk**
+ * **ResourceDisk** \
+ * **NvmeDisk**
  */
 export type DiffDiskPlacement = string;
 
@@ -7434,6 +7547,42 @@ export enum KnownOrchestrationMode {
  * **Flexible**
  */
 export type OrchestrationMode = string;
+
+/** Known values of {@link ZonalPlatformFaultDomainAlignMode} that the service accepts. */
+export enum KnownZonalPlatformFaultDomainAlignMode {
+  /** Aligned */
+  Aligned = "Aligned",
+  /** Unaligned */
+  Unaligned = "Unaligned",
+}
+
+/**
+ * Defines values for ZonalPlatformFaultDomainAlignMode. \
+ * {@link KnownZonalPlatformFaultDomainAlignMode} can be used interchangeably with ZonalPlatformFaultDomainAlignMode,
+ *  this enum contains the known values that the service supports.
+ * ### Known values supported by the service
+ * **Aligned** \
+ * **Unaligned**
+ */
+export type ZonalPlatformFaultDomainAlignMode = string;
+
+/** Known values of {@link AllocationStrategy} that the service accepts. */
+export enum KnownAllocationStrategy {
+  /** LowestPrice */
+  LowestPrice = "LowestPrice",
+  /** CapacityOptimized */
+  CapacityOptimized = "CapacityOptimized",
+}
+
+/**
+ * Defines values for AllocationStrategy. \
+ * {@link KnownAllocationStrategy} can be used interchangeably with AllocationStrategy,
+ *  this enum contains the known values that the service supports.
+ * ### Known values supported by the service
+ * **LowestPrice** \
+ * **CapacityOptimized**
+ */
+export type AllocationStrategy = string;
 
 /** Known values of {@link ExtendedLocationTypes} that the service accepts. */
 export enum KnownExtendedLocationTypes {
@@ -8629,6 +8778,27 @@ export enum KnownExpandTypesForGetCapacityReservationGroups {
  */
 export type ExpandTypesForGetCapacityReservationGroups = string;
 
+/** Known values of {@link ResourceIdOptionsForGetCapacityReservationGroups} that the service accepts. */
+export enum KnownResourceIdOptionsForGetCapacityReservationGroups {
+  /** CreatedInSubscription */
+  CreatedInSubscription = "CreatedInSubscription",
+  /** SharedWithSubscription */
+  SharedWithSubscription = "SharedWithSubscription",
+  /** All */
+  All = "All",
+}
+
+/**
+ * Defines values for ResourceIdOptionsForGetCapacityReservationGroups. \
+ * {@link KnownResourceIdOptionsForGetCapacityReservationGroups} can be used interchangeably with ResourceIdOptionsForGetCapacityReservationGroups,
+ *  this enum contains the known values that the service supports.
+ * ### Known values supported by the service
+ * **CreatedInSubscription** \
+ * **SharedWithSubscription** \
+ * **All**
+ */
+export type ResourceIdOptionsForGetCapacityReservationGroups = string;
+
 /** Known values of {@link CapacityReservationInstanceViewTypes} that the service accepts. */
 export enum KnownCapacityReservationInstanceViewTypes {
   /** InstanceView */
@@ -9595,14 +9765,14 @@ export type ProtocolTypes = "Http" | "Https";
 export type CachingTypes = "None" | "ReadOnly" | "ReadWrite";
 /** Defines values for OperatingSystemTypes. */
 export type OperatingSystemTypes = "Windows" | "Linux";
-/** Defines values for StatusLevelTypes. */
-export type StatusLevelTypes = "Info" | "Warning" | "Error";
 /** Defines values for ResourceIdentityType. */
 export type ResourceIdentityType =
   | "SystemAssigned"
   | "UserAssigned"
   | "SystemAssigned, UserAssigned"
   | "None";
+/** Defines values for StatusLevelTypes. */
+export type StatusLevelTypes = "Info" | "Warning" | "Error";
 /** Defines values for VirtualMachineScaleSetSkuScaleType. */
 export type VirtualMachineScaleSetSkuScaleType = "Automatic" | "None";
 /** Defines values for UpgradeState. */
@@ -10486,7 +10656,7 @@ export interface VirtualMachinesConvertToManagedDisksOptionalParams
 /** Optional parameters. */
 export interface VirtualMachinesDeallocateOptionalParams
   extends coreClient.OperationOptions {
-  /** Optional parameter to hibernate a virtual machine. (Feature in Preview) */
+  /** Optional parameter to hibernate a virtual machine. */
   hibernate?: boolean;
   /** Delay to wait until next poll, in milliseconds. */
   updateIntervalInMs?: number;
@@ -11364,6 +11534,8 @@ export interface CapacityReservationGroupsListBySubscriptionOptionalParams
   extends coreClient.OperationOptions {
   /** The expand expression to apply on the operation. Based on the expand param(s) specified we return Virtual Machine or ScaleSet VM Instance or both resource Ids which are associated to capacity reservation group in the response. */
   expand?: ExpandTypesForGetCapacityReservationGroups;
+  /** The query option to fetch Capacity Reservation Group Resource Ids. <br> 'CreatedInSubscription' enables fetching Resource Ids for all capacity reservation group resources created in the subscription. <br> 'SharedWithSubscription' enables fetching Resource Ids for all capacity reservation group resources shared with the subscription. <br> 'All' enables fetching Resource Ids for all capacity reservation group resources shared with the subscription and created in the subscription. */
+  resourceIdsOnly?: ResourceIdOptionsForGetCapacityReservationGroups;
 }
 
 /** Contains response data for the listBySubscription operation. */

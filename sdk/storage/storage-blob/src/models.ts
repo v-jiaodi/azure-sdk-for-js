@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { AbortSignalLike } from "@azure/abort-controller";
 import { CancelOnProgress, PollOperationState } from "@azure/core-lro";
@@ -330,6 +330,14 @@ export enum StorageBlobAudience {
    * The OAuth scope to use to retrieve an AAD token for Azure Disk.
    */
   DiskComputeOAuthScopes = "https://disk.compute.azure.com/.default",
+}
+
+/**
+ *
+ * To get OAuth audience for a storage account for blob service.
+ */
+export function getBlobServiceAccountAudience(storageAccountName: string): string {
+  return `https://${storageAccountName}.blob.core.windows.net/.default`;
 }
 
 /**

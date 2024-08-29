@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 /**
  * This sample demonstrates how the sendNotification() method can be used to send a direct
@@ -44,14 +44,16 @@ async function main(): Promise<void> {
   const context = createClientContext(connectionString, hubName);
 
   const messageBody = `{
-	"notification":{
-		"title":"Notification Hub Test Notification",
-		"body":"This is a sample notification delivered by Azure Notification Hubs."
-	},
-	"data":{
-		"property1":"value1",
-		"property2":42
-	}
+    "message": {
+      "notification":{
+        "title":"Notification Hub Test Notification",
+        "body":"This is a sample notification delivered by Azure Notification Hubs."
+      },
+      "data":{
+        "property1":"value1",
+        "property2":"42"
+      }
+    }
 }`;
 
   const notification = createFcmV1Notification({

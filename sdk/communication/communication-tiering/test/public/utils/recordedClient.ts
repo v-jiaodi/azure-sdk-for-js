@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 import * as dotenv from "dotenv";
 
 import { ClientSecretCredential, DefaultAzureCredential, TokenCredential } from "@azure/identity";
@@ -12,10 +12,10 @@ import {
 } from "@azure-tools/test-recorder";
 import { Context } from "mocha";
 import { TieringClient } from "../../../src";
-import { isNode } from "@azure/test-utils";
+import { isNodeLike } from "@azure/core-util";
 import { parseConnectionString } from "@azure/communication-common";
 
-if (isNode) {
+if (isNodeLike) {
   dotenv.config();
 }
 
@@ -104,7 +104,7 @@ export async function createRecordedClientWithToken(
     };
   }
 
-  if (isNode) {
+  if (isNodeLike) {
     credential = new DefaultAzureCredential();
   } else {
     credential = new ClientSecretCredential(

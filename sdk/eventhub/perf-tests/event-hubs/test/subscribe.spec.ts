@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import {
   earliestEventPosition,
@@ -26,7 +26,7 @@ interface ReceiverOptions {
 
 const connectionString = getEnvVar("EVENTHUB_CONNECTION_STRING");
 const eventHubName = getEnvVar("EVENTHUB_NAME");
-const consumerGroup = process.env.CONSUMER_GROUP_NAME || "$Default";
+const consumerGroup = process.env.EVENTHUB_CONSUMER_GROUP_NAME || "$Default";
 
 const consumer = new EventHubConsumerClient(consumerGroup, connectionString, eventHubName);
 
@@ -123,12 +123,14 @@ export class SubscribeTest extends EventPerfTest<ReceiverOptions> {
     // The following might just be noise if we don't think there are related changes to the code
     if (this.parsedOptions["log-median-batch-size"].value) {
       console.log(
-        `\tBatch count: ${this.callbackCallsCount}, Batch count per sec: ${this.callbackCallsCount / this.parsedOptions.duration.value
+        `\tBatch count: ${this.callbackCallsCount}, Batch count per sec: ${
+          this.callbackCallsCount / this.parsedOptions.duration.value
         }`,
       );
       console.log(`\tmessagesPerBatch: ${this.messagesPerBatch}`);
       console.log(
-        `\tmessagesPerBatch... median: ${median(this.messagesPerBatch)}, avg: ${this.messagesPerBatch.reduce((a, b) => a + b, 0) / this.messagesPerBatch.length
+        `\tmessagesPerBatch... median: ${median(this.messagesPerBatch)}, avg: ${
+          this.messagesPerBatch.reduce((a, b) => a + b, 0) / this.messagesPerBatch.length
         }, max: ${Math.max(...this.messagesPerBatch)}, min: ${Math.min(...this.messagesPerBatch)}`,
       );
     }

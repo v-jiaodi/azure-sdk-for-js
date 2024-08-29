@@ -1,15 +1,15 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { AccessToken, GetTokenOptions, TokenCredential } from "@azure/core-auth";
+import { MsalClient, createMsalClient } from "../msal/nodeFlows/msalClient";
 import {
   processMultiTenantRequest,
   resolveAdditionallyAllowedTenantIds,
 } from "../util/tenantIdUtils";
 
 import { ClientSecretCredentialOptions } from "./clientSecretCredentialOptions";
-import { MsalClientSecret } from "../msal/nodeFlows/msalClientSecret";
-import { MsalFlow } from "../msal/flows";
+import { CredentialUnavailableError } from "../errors";
 import { credentialLogger } from "../util/logging";
 import { ensureScopes } from "../util/scopeUtils";
 import { tracingClient } from "../util/tracing";
@@ -27,7 +27,8 @@ const logger = credentialLogger("ClientSecretCredential");
 export class ClientSecretCredential implements TokenCredential {
   private tenantId: string;
   private additionallyAllowedTenantIds: string[];
-  private msalFlow: MsalFlow;
+  private msalClient: MsalClient;
+  private clientSecret: string;
 
   /**
    * Creates an instance of the ClientSecretCredential with the details
@@ -45,23 +46,33 @@ export class ClientSecretCredential implements TokenCredential {
     clientSecret: string,
     options: ClientSecretCredentialOptions = {},
   ) {
-    if (!tenantId || !clientId || !clientSecret) {
-      throw new Error(
-        "ClientSecretCredential: tenantId, clientId, and clientSecret are required parameters. To troubleshoot, visit https://aka.ms/azsdk/js/identity/serviceprincipalauthentication/troubleshoot.",
+    if (!tenantId) {
+      throw new CredentialUnavailableError(
+        "ClientSecretCredential: tenantId is a required parameter. To troubleshoot, visit https://aka.ms/azsdk/js/identity/serviceprincipalauthentication/troubleshoot.",
       );
     }
 
+    if (!clientId) {
+      throw new CredentialUnavailableError(
+        "ClientSecretCredential: clientId is a required parameter. To troubleshoot, visit https://aka.ms/azsdk/js/identity/serviceprincipalauthentication/troubleshoot.",
+      );
+    }
+
+    if (!clientSecret) {
+      throw new CredentialUnavailableError(
+        "ClientSecretCredential: clientSecret is a required parameter. To troubleshoot, visit https://aka.ms/azsdk/js/identity/serviceprincipalauthentication/troubleshoot.",
+      );
+    }
+
+    this.clientSecret = clientSecret;
     this.tenantId = tenantId;
     this.additionallyAllowedTenantIds = resolveAdditionallyAllowedTenantIds(
       options?.additionallyAllowedTenants,
     );
 
-    this.msalFlow = new MsalClientSecret({
+    this.msalClient = createMsalClient(clientId, tenantId, {
       ...options,
       logger,
-      clientId,
-      tenantId,
-      clientSecret,
       tokenCredentialOptions: options,
     });
   }
@@ -87,7 +98,7 @@ export class ClientSecretCredential implements TokenCredential {
         );
 
         const arrayScopes = ensureScopes(scopes);
-        return this.msalFlow.getToken(arrayScopes, newOptions);
+        return this.msalClient.getTokenByClientSecret(arrayScopes, this.clientSecret, newOptions);
       },
     );
   }

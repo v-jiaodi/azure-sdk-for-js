@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { assert } from "chai";
 import { Context } from "mocha";
@@ -16,7 +16,7 @@ import {
   listAllTrunks,
   resetUniqueFqdns,
 } from "./utils/recordedClient";
-import { matrix } from "@azure/test-utils";
+import { matrix } from "@azure-tools/test-utils";
 
 matrix([[true, false]], async function (useAad) {
   describe(`SipRoutingClient - get trunks${useAad ? " [AAD]" : ""}`, function () {

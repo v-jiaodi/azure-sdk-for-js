@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import {
   AccessToken,
@@ -8,7 +8,7 @@ import {
   isNamedKeyCredential,
   isSASCredential,
 } from "@azure/core-auth";
-import { signString } from "../util/hmacSha256";
+import { signString } from "../util/hmacSha256.js";
 
 /**
  * A SasTokenProvider provides an alternative to TokenCredential for providing an `AccessToken`.

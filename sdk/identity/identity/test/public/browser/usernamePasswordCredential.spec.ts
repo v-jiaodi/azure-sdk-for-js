@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { IdentityTestContextInterface, createResponse } from "../../httpRequestsCommon";
 import { IdentityTestContext } from "../../httpRequests";
 import { UsernamePasswordCredential } from "../../../src";
 import { assert } from "chai";
 import { assertClientCredentials } from "../../authTestUtils";
-import { fakeTestPasswordPlaceholder } from "@azure/test-utils";
+import { fakeTestPasswordPlaceholder } from "@azure-tools/test-utils";
 
 describe("UsernamePasswordCredential", function () {
   let testContext: IdentityTestContextInterface;

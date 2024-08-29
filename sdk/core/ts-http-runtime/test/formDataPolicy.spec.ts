@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { describe, it, assert, vi } from "vitest";
 import {
@@ -10,6 +10,8 @@ import {
   createHttpHeaders,
   createPipelineRequest,
   formDataPolicy,
+  isBrowser,
+  isNodeLike,
   stringToUint8Array,
 } from "../src/index.js";
 import { BodyPart, FormDataMap, MultipartRequestBody } from "../src/interfaces.js";
@@ -27,7 +29,7 @@ export async function performRequest(formData: FormDataMap): Promise<PipelineRes
     request,
     status: 200,
   };
-  const next = vi.fn<Parameters<SendRequest>, ReturnType<SendRequest>>();
+  const next = vi.fn<SendRequest>();
   next.mockResolvedValue(successResponse);
 
   const policy = formDataPolicy();
@@ -52,7 +54,7 @@ describe("formDataPolicy", function () {
       request,
       status: 200,
     };
-    const next = vi.fn<Parameters<SendRequest>, ReturnType<SendRequest>>();
+    const next = vi.fn<SendRequest>();
     next.mockResolvedValue(successResponse);
 
     const policy = formDataPolicy();
@@ -79,7 +81,7 @@ describe("formDataPolicy", function () {
       request,
       status: 200,
     };
-    const next = vi.fn<Parameters<SendRequest>, ReturnType<SendRequest>>();
+    const next = vi.fn<SendRequest>();
     next.mockResolvedValue(successResponse);
 
     const policy = formDataPolicy();
@@ -301,5 +303,65 @@ describe("formDataPolicy", function () {
         );
       },
     );
+  });
+
+  describe("FormData request bodies", () => {
+    it.runIf(isNodeLike)("should be processed by formDataPolicy in Node", async () => {
+      const request = createPipelineRequest({
+        url: "https://bing.com",
+        headers: createHttpHeaders({
+          "Content-Type": "application/x-www-form-urlencoded",
+        }),
+      });
+      request.body = new FormData();
+      request.body.append("service", "registry.azurecr.io");
+      request.body.append("scope", "repository:library/hello-world:metadata_read");
+
+      const successResponse: PipelineResponse = {
+        headers: createHttpHeaders(),
+        request,
+        status: 200,
+      };
+      const next = vi.fn<SendRequest>();
+      next.mockResolvedValue(successResponse);
+
+      const policy = formDataPolicy();
+
+      const result = await policy.sendRequest(request, next);
+
+      assert.isUndefined(result.request.formData);
+      assert.strictEqual(
+        result.request.body,
+        `service=registry.azurecr.io&scope=repository%3Alibrary%2Fhello-world%3Ametadata_read`,
+      );
+    });
+
+    it.runIf(isBrowser)("should be passed through in browser", async () => {
+      const request = createPipelineRequest({
+        url: "https://bing.com",
+        headers: createHttpHeaders({
+          "Content-Type": "application/x-www-form-urlencoded",
+        }),
+      });
+      const formData = new FormData();
+      formData.append("service", "registry.azurecr.io");
+      formData.append("scope", "repository:library/hello-world:metadata_read");
+      request.body = formData;
+
+      const successResponse: PipelineResponse = {
+        headers: createHttpHeaders(),
+        request,
+        status: 200,
+      };
+      const next = vi.fn<SendRequest>();
+      next.mockResolvedValue(successResponse);
+
+      const policy = formDataPolicy();
+
+      const result = await policy.sendRequest(request, next);
+
+      assert.isUndefined(result.request.formData);
+      assert.strictEqual(result.request.body, formData);
+    });
   });
 });

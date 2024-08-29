@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 export * from "./plugins/consumer";
 
@@ -75,6 +75,7 @@ export {
   ManagedIdentityCredential,
   ManagedIdentityCredentialClientIdOptions,
   ManagedIdentityCredentialResourceIdOptions,
+  ManagedIdentityCredentialObjectIdOptions,
 } from "./credentials/managedIdentityCredential";
 export { DeviceCodeCredential } from "./credentials/deviceCodeCredential";
 export {
@@ -82,7 +83,8 @@ export {
   DeviceCodeInfo,
 } from "./credentials/deviceCodeCredentialOptions";
 export { DeviceCodeCredentialOptions } from "./credentials/deviceCodeCredentialOptions";
-
+export { AzurePipelinesCredential as AzurePipelinesCredential } from "./credentials/azurePipelinesCredential";
+export { AzurePipelinesCredentialOptions as AzurePipelinesCredentialOptions } from "./credentials/azurePipelinesCredentialOptions";
 export { AuthorizationCodeCredential } from "./credentials/authorizationCodeCredential";
 export { AuthorizationCodeCredentialOptions } from "./credentials/authorizationCodeCredentialOptions";
 export { AzurePowerShellCredential } from "./credentials/azurePowerShellCredential";
@@ -91,6 +93,7 @@ export {
   OnBehalfOfCredentialOptions,
   OnBehalfOfCredentialSecretOptions,
   OnBehalfOfCredentialCertificateOptions,
+  OnBehalfOfCredentialAssertionOptions,
 } from "./credentials/onBehalfOfCredentialOptions";
 export { UsernamePasswordCredential } from "./credentials/usernamePasswordCredential";
 export { UsernamePasswordCredentialOptions } from "./credentials/usernamePasswordCredentialOptions";
@@ -113,3 +116,5 @@ export { AzureAuthorityHosts } from "./constants";
 export function getDefaultAzureCredential(): TokenCredential {
   return new DefaultAzureCredential();
 }
+
+export { getBearerTokenProvider, GetBearerTokenProviderOptions } from "./tokenProvider";

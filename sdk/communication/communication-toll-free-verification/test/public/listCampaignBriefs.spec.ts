@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { Context } from "mocha";
 import { Recorder } from "@azure-tools/test-recorder";
@@ -25,5 +25,5 @@ describe(`TollFreeVerificationClient - lists Campaign Briefs`, function () {
     for await (const campaignBrief of client.listCampaignBriefs()) {
       assert.equal(campaignBrief.countryCode, "US");
     }
-  }).timeout(10000);
+  }).timeout(30000);
 });

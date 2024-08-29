@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { describe, it, assert, expect, vi, beforeEach, afterEach, type Mock } from "vitest";
 import {
@@ -120,7 +120,7 @@ describe("tracingPolicy", function () {
 
   function createTestRequest({ noContext = false } = {}): {
     request: PipelineRequest;
-    next: Mock<Parameters<SendRequest>, ReturnType<SendRequest>>;
+    next: Mock<SendRequest>;
   } {
     const request = createPipelineRequest({
       url: "https://bing.com",
@@ -133,7 +133,7 @@ describe("tracingPolicy", function () {
       request: request,
       status: 200,
     };
-    const next = vi.fn<Parameters<SendRequest>, ReturnType<SendRequest>>();
+    const next = vi.fn<SendRequest>();
     next.mockResolvedValue(response);
     return { request, next };
   }
@@ -153,14 +153,42 @@ describe("tracingPolicy", function () {
     await policy.sendRequest(request, next);
 
     const createdSpan = activeInstrumenter.lastSpanCreated;
-    assert.exists(createdSpan);
-    const mockSpan = createdSpan!;
+    if (!createdSpan) {
+      assert.fail("expected span to be created");
+    }
+    const mockSpan = createdSpan;
     assert.isTrue(mockSpan.endCalled, "expected span to be ended");
     assert.equal(mockSpan.name, "HTTP POST");
     assert.equal(mockSpan.getAttribute("http.method"), "POST");
     assert.equal(mockSpan.getAttribute("http.url"), request.url);
     assert.equal(mockSpan.getAttribute("requestId"), request.requestId);
     assert.equal(mockSpan.getAttribute("http.status_code"), 200); // createTestRequest's response will return 200 OK
+  });
+
+  it("will sanitize URLs", async () => {
+    const policy = tracingPolicy({ additionalAllowedQueryParameters: ["allowedQueryParam"] });
+    const request = createPipelineRequest({
+      url: "https://bing.com/search?redactedParam=redactedValue&allowedQueryParam=allowedValue",
+      tracingOptions: { tracingContext: noopTracingContext },
+    });
+
+    const response: PipelineResponse = {
+      headers: createHttpHeaders(),
+      request: request,
+      status: 200,
+    };
+    const next = vi.fn<SendRequest>();
+    next.mockResolvedValue(response);
+
+    await policy.sendRequest(request, next);
+    const createdSpan = activeInstrumenter.lastSpanCreated;
+    if (!createdSpan) {
+      assert.fail("expected span to be created");
+    }
+
+    const spanUrlValue = new URL(createdSpan.getAttribute("http.url") as string);
+    assert.equal(spanUrlValue.searchParams.get("redactedParam"), "REDACTED");
+    assert.equal(spanUrlValue.searchParams.get("allowedQueryParam"), "allowedValue");
   });
 
   it("will set request headers correctly", async () => {
@@ -183,7 +211,7 @@ describe("tracingPolicy", function () {
     });
 
     const policy = tracingPolicy();
-    const next = vi.fn<Parameters<SendRequest>, ReturnType<SendRequest>>();
+    const next = vi.fn<SendRequest>();
     const requestError = new RestError("Bad Request.", { statusCode: 400 });
     next.mockRejectedValue(requestError);
 

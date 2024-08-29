@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { ServiceClient } from "@azure/core-client";
 import { isPlaybackMode, Recorder } from "../src/index.js";
@@ -128,6 +128,38 @@ import { env } from "../src/index.js";
           { path: `/sample_response`, method: "GET" },
           { val: "abc" },
         );
+      });
+
+      it("Connection string sanitizer - singular", async () => {
+        await recorder.start({
+          envSetupForPlayback: {},
+          sanitizerOptions: {
+            connectionStringSanitizers: [
+              {
+                fakeConnString: "endpoint=https://endpoint/;accesskey=banana",
+                actualConnString: "endpoint=https://realEndpoint/;accessKey=realBanana",
+              },
+            ],
+          },
+        });
+      });
+
+      it("Connection string sanitizer - multiple", async () => {
+        await recorder.start({
+          envSetupForPlayback: {},
+          sanitizerOptions: {
+            connectionStringSanitizers: [
+              {
+                fakeConnString: "endpoint=https://endpoint/;accessKey=banana",
+                actualConnString: "endpoint=https://realEndpoint/;accessKey=realBanana",
+              },
+              {
+                fakeConnString: "endpoint2=https://randomEndpoint/;Key3=banana",
+                actualConnString: "endpoint2=https://finalEndpoint/;Key3=realBanana",
+              },
+            ],
+          },
+        });
       });
 
       it("BodyKeySanitizer", async () => {

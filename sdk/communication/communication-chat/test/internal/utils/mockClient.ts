@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { AzureCommunicationTokenCredential } from "@azure/communication-common";
 import {
@@ -86,6 +86,29 @@ export const mockMessageWithImageAttachment: RestModel.ChatMessage = {
         attachmentType: "image",
         name: "",
         url: "url",
+        previewUrl: "previewUrl",
+      },
+    ],
+  },
+  createdOn: new Date("2020-06-26T18:06:06Z"),
+  senderDisplayName: "senderDisplayName",
+  senderCommunicationIdentifier: mockCommunicationIdentifier,
+  deletedOn: new Date("2020-06-26T18:06:06Z"),
+  metadata: { tags: "tag" },
+};
+
+export const mockMessageWithFileAttachment: RestModel.ChatMessage = {
+  id: "id",
+  type: "text",
+  version: "version",
+  sequenceId: "sequenceId",
+  content: {
+    message: "content",
+    topic: "topic",
+    attachments: [
+      {
+        id: "id",
+        attachmentType: "file",
         previewUrl: "previewUrl",
       },
     ],

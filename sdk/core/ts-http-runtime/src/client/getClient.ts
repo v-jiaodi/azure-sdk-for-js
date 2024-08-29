@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { TokenCredential, isTokenCredential } from "../auth/tokenCredential.js";
 import { KeyCredential, isKeyCredential } from "../auth/keyCredential.js";
@@ -12,6 +12,7 @@ import {
   HttpBrowserStreamResponse,
   HttpNodeStreamResponse,
   RequestParameters,
+  ResourceMethods,
   StreamableMethod,
 } from "./common.js";
 import { sendRequest } from "./sendRequest.js";
@@ -62,7 +63,7 @@ export function getClient(
   }
 
   const { allowInsecureConnection, httpClient } = clientOptions;
-  const client = (path: string, ...args: Array<any>) => {
+  const client = (path: string, ...args: Array<any>): ResourceMethods<StreamableMethod> => {
     const getUrl = (requestOptions: RequestParameters): string =>
       buildRequestUrl(endpoint, path, args, { allowInsecureConnection, ...requestOptions });
 

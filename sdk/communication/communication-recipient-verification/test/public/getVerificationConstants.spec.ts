@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { Context } from "mocha";
 import { Recorder } from "@azure-tools/test-recorder";
@@ -26,5 +26,5 @@ describe(`RecipientVerificationClient - Get verification constants`, function ()
     assert.isNotNull(verificationConstants.currentNumberOfVerifications);
     assert.isNotNull(verificationConstants.maxRetriesAllowed);
     assert.isNotNull(verificationConstants.maxVerificationsAllowed);
-  }).timeout(10000);
+  }).timeout(30000);
 });

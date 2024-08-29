@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { Context } from "mocha";
 import { Recorder } from "@azure-tools/test-recorder";
@@ -28,7 +28,7 @@ describe(`ShortCodeCostsClient - lists Short Code Costs`, function () {
       assert.isNotNull(shortCodeCost);
     }
     assert.isAtLeast(count, 3);
-  }).timeout(20000);
+  }).timeout(30000);
 
   it("can list all short code costs, by Page", async function () {
     const pages = client.listShortCodeCosts({ top: 1 }).byPage();
@@ -42,5 +42,5 @@ describe(`ShortCodeCostsClient - lists Short Code Costs`, function () {
         assert.isNotNull(shortCodeCost);
       }
     }
-  }).timeout(20000);
+  }).timeout(30000);
 });

@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license
+// Licensed under the MIT License
 
 import path from "node:path";
 import { resolveProject } from "../../util/resolveProject";
@@ -40,7 +40,7 @@ export default leafCommand(commandInfo, async (options) => {
         log.info(`Version specifier: ${currentPackage.name}@${currentPackage.version}`);
         log.info(`Location: ${path.resolve(dir, currentPackage.path)}`);
       }
-    } catch (error: any) {
+    } catch (error: unknown) {
       log.error("Could not find package starting from", dir);
       log.error(error);
     }

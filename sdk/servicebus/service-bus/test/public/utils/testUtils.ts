@@ -1,8 +1,8 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import chai from "chai";
-const assert = chai.assert;
+const assert: typeof chai.assert = chai.assert;
 import { ServiceBusReceivedMessage, ServiceBusMessage, delay } from "../../../src";
 
 export class TestMessage {

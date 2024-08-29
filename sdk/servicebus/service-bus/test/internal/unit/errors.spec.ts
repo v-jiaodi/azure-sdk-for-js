@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import * as sinon from "sinon";
 import { MessagingError } from "@azure/core-amqp";
@@ -8,7 +8,7 @@ import chai from "chai";
 import chaiAsPromised from "chai-as-promised";
 import { createServiceBusLogger } from "../../../src/log";
 chai.use(chaiAsPromised);
-const assert = chai.assert;
+const assert: typeof chai.assert = chai.assert;
 
 describe("errors", () => {
   let verboseSpy: sinon.SinonSpy<any[], void>;

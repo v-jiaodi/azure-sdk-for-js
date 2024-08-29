@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { assert } from "chai";
 import { Context } from "mocha";
 
 import { SipRoutingClient } from "../../../src";
 
-import { matrix } from "@azure/test-utils";
+import { matrix } from "@azure-tools/test-utils";
 import { Recorder, isPlaybackMode } from "@azure-tools/test-recorder";
 import {
   clearSipConfiguration,

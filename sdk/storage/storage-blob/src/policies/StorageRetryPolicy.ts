@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { AbortError, AbortSignalLike } from "@azure/abort-controller";
 
@@ -246,6 +246,22 @@ export class StorageRetryPolicy extends BaseRequestPolicy {
         return true;
       }
     }
+
+    // [Copy source error code] Feature is pending on service side, skip retry on copy source error for now.
+    // if (response) {
+    //   // Retry select Copy Source Error Codes.
+    //   if (response?.status >= 400) {
+    //     const copySourceError = response.headers.get(HeaderConstants.X_MS_CopySourceErrorCode);
+    //     if (copySourceError !== undefined) {
+    //       switch (copySourceError) {
+    //         case "InternalError":
+    //         case "OperationTimedOut":
+    //         case "ServerBusy":
+    //           return true;
+    //       }
+    //     }
+    //   }
+    // }
 
     if (err?.code === "PARSE_ERROR" && err?.message.startsWith(`Error "Error: Unclosed root tag`)) {
       logger.info(

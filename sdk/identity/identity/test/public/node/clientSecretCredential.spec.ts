@@ -1,15 +1,14 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 /* eslint-disable @typescript-eslint/no-non-null-asserted-optional-chain */
 
 import { MsalTestCleanup, msalNodeTestSetup } from "../../node/msalNodeTestSetup";
 import { Recorder, delay, env, isRecordMode } from "@azure-tools/test-recorder";
 
-import { AbortController } from "@azure/abort-controller";
 import { ClientSecretCredential } from "../../../src";
 import { Context } from "mocha";
-import { assert } from "@azure/test-utils";
+import { assert } from "@azure-tools/test-utils";
 
 describe("ClientSecretCredential", function () {
   let cleanup: MsalTestCleanup;

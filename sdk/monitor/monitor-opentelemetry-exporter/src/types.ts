@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { ContextTagKeys } from "./generated";
 
@@ -44,4 +44,30 @@ export type SenderResult = { statusCode: number | undefined; result: string };
 export interface PersistentStorage {
   shift(): Promise<unknown>;
   push(value: unknown[]): Promise<boolean>;
+}
+
+/**
+ * Performance Counter OpenTelemetry compliant names.
+ * @internal
+ */
+export enum OTelPerformanceCounterNames {
+  PRIVATE_BYTES = "Private_Bytes",
+  AVAILABLE_BYTES = "Available_Bytes",
+  PROCESSOR_TIME = "Processor_Time",
+  PROCESS_TIME = "Process_Time",
+  REQUEST_RATE = "Request_Rate",
+  REQUEST_DURATION = "Request_Execution_Time",
+}
+
+/**
+ * Breeze Performance Counter names.
+ * @internal
+ */
+export enum BreezePerformanceCounterNames {
+  PRIVATE_BYTES = "\\Process(??APP_WIN32_PROC??)\\Private Bytes",
+  AVAILABLE_BYTES = "\\Memory\\Available Bytes",
+  PROCESSOR_TIME = "\\Processor(_Total)\\% Processor Time",
+  PROCESS_TIME = "\\Process(??APP_WIN32_PROC??)\\% Processor Time",
+  REQUEST_RATE = "\\ASP.NET Applications(??APP_W3SVC_PROC??)\\Requests/Sec",
+  REQUEST_DURATION = "\\ASP.NET Applications(??APP_W3SVC_PROC??)\\Request Execution Time",
 }

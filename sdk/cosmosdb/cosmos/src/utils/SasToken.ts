@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { SasTokenProperties } from "../client/SasToken/SasTokenProperties";
 import { Constants, CosmosKeyType, SasTokenPermissionKind } from "../common";
@@ -97,7 +97,7 @@ export async function createAuthorizationSasToken(
 
   if (
     typeof sasTokenProperties.keyType !== "number" ||
-    typeof sasTokenProperties.keyType === undefined
+    typeof sasTokenProperties.keyType === "undefined"
   ) {
     switch (sasTokenProperties.keyType) {
       case CosmosKeyType.PrimaryMaster:

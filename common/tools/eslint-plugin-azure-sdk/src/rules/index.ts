@@ -1,9 +1,8 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 /**
  * @file All rules
- * @author Arpan Laha
  */
 
 import githubSourceHeaders from "./github-source-headers";

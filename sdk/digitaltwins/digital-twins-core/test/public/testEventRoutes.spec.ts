@@ -1,12 +1,12 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { DigitalTwinsClient } from "../../src";
 import { authenticate } from "../utils/testAuthentication";
 import { Recorder } from "@azure-tools/test-recorder";
 import chai from "chai";
 
-const assert = chai.assert;
+const assert: typeof chai.assert = chai.assert;
 const should = chai.should();
 
 describe("DigitalTwins EventRoutes - create, read, list and delete operations", () => {

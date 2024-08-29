@@ -1,15 +1,15 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { describe, it, assert } from "vitest";
 import { createHttpHeaders } from "../../src/httpHeaders.js";
-import { isNode, stringToUint8Array } from "@azure/core-util";
+import { isNodeLike, stringToUint8Array } from "@azure/core-util";
 import { Readable } from "stream";
 import { performRequest } from "../multipartPolicy.spec.js";
 import { assertBodyMatches } from "../util.js";
 
 describe("multipartPolicy (node-only)", function () {
-  it.runIf(isNode)("supports Node ReadableStream body", async function () {
+  it.runIf(isNodeLike)("supports Node ReadableStream body", async function () {
     const body = Readable.from(Buffer.from("part1", "utf-8"));
 
     const request = await performRequest({

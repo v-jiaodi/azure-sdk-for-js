@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { assert } from "chai";
 import { Context } from "mocha";
@@ -13,7 +13,7 @@ import {
 } from "../../src";
 import { createRecordedAdvisorClient, makeCredential } from "./util/recordedClients";
 import { Recorder, assertEnvironmentVariable } from "@azure-tools/test-recorder";
-import { getYieldedValue, matrix } from "@azure/test-utils";
+import { getYieldedValue, matrix } from "@azure-tools/test-utils";
 
 matrix([[true, false]] as const, async (useAad) => {
   describe(`[${useAad ? "AAD" : "API Key"}]`, () => {

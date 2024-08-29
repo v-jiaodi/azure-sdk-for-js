@@ -1,13 +1,14 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { AccessToken, GetTokenOptions, TokenCredential } from "@azure/core-auth";
+import { MsalClient, createMsalClient } from "../msal/nodeFlows/msalClient";
 import {
   processMultiTenantRequest,
   resolveAdditionallyAllowedTenantIds,
 } from "../util/tenantIdUtils";
-import { MsalFlow } from "../msal/flows";
-import { MsalUsernamePassword } from "../msal/nodeFlows/msalUsernamePassword";
+
+import { CredentialUnavailableError } from "../errors";
 import { UsernamePasswordCredentialOptions } from "./usernamePasswordCredentialOptions";
 import { credentialLogger } from "../util/logging";
 import { ensureScopes } from "../util/scopeUtils";
@@ -24,7 +25,9 @@ const logger = credentialLogger("UsernamePasswordCredential");
 export class UsernamePasswordCredential implements TokenCredential {
   private tenantId: string;
   private additionallyAllowedTenantIds: string[];
-  private msalFlow: MsalFlow;
+  private msalClient: MsalClient;
+  private username: string;
+  private password: string;
 
   /**
    * Creates an instance of the UsernamePasswordCredential with the details
@@ -44,9 +47,27 @@ export class UsernamePasswordCredential implements TokenCredential {
     password: string,
     options: UsernamePasswordCredentialOptions = {},
   ) {
-    if (!tenantId || !clientId || !username || !password) {
-      throw new Error(
-        "UsernamePasswordCredential: tenantId, clientId, username and password are required parameters. To troubleshoot, visit https://aka.ms/azsdk/js/identity/usernamepasswordcredential/troubleshoot.",
+    if (!tenantId) {
+      throw new CredentialUnavailableError(
+        "UsernamePasswordCredential: tenantId is a required parameter. To troubleshoot, visit https://aka.ms/azsdk/js/identity/usernamepasswordcredential/troubleshoot.",
+      );
+    }
+
+    if (!clientId) {
+      throw new CredentialUnavailableError(
+        "UsernamePasswordCredential: clientId is a required parameter. To troubleshoot, visit https://aka.ms/azsdk/js/identity/usernamepasswordcredential/troubleshoot.",
+      );
+    }
+
+    if (!username) {
+      throw new CredentialUnavailableError(
+        "UsernamePasswordCredential: username is a required parameter. To troubleshoot, visit https://aka.ms/azsdk/js/identity/usernamepasswordcredential/troubleshoot.",
+      );
+    }
+
+    if (!password) {
+      throw new CredentialUnavailableError(
+        "UsernamePasswordCredential: password is a required parameter. To troubleshoot, visit https://aka.ms/azsdk/js/identity/usernamepasswordcredential/troubleshoot.",
       );
     }
 
@@ -55,14 +76,12 @@ export class UsernamePasswordCredential implements TokenCredential {
       options?.additionallyAllowedTenants,
     );
 
-    this.msalFlow = new MsalUsernamePassword({
+    this.username = username;
+    this.password = password;
+
+    this.msalClient = createMsalClient(clientId, this.tenantId, {
       ...options,
-      logger,
-      clientId,
-      tenantId,
-      username,
-      password,
-      tokenCredentialOptions: options || {},
+      tokenCredentialOptions: options ?? {},
     });
   }
 
@@ -91,7 +110,12 @@ export class UsernamePasswordCredential implements TokenCredential {
         );
 
         const arrayScopes = ensureScopes(scopes);
-        return this.msalFlow.getToken(arrayScopes, newOptions);
+        return this.msalClient.getTokenByUsernamePassword(
+          arrayScopes,
+          this.username,
+          this.password,
+          newOptions,
+        );
       },
     );
   }

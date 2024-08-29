@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { Constants, ErrorNameConditionMapper, translate } from "@azure/core-amqp";
 import { isDefined, objectHasProperty } from "@azure/core-util";
@@ -22,7 +22,7 @@ export interface EventPosition {
    * The same offset may refer to a different event as events reach the age limit for
    * retention and are no longer visible within the partition.
    */
-  offset?: number | "@latest";
+  offset?: string | "@latest";
   /**
    * Indicates if the specified offset is inclusive of the event which it identifies.
    * This information is only relevent if the event position was identified by an offset or sequence number.
@@ -93,7 +93,7 @@ export function isLatestPosition(eventPosition: EventPosition): boolean {
  * first event in the partition which has not expired due to the retention policy.
  */
 export const earliestEventPosition: EventPosition = {
-  offset: -1,
+  offset: "-1",
 };
 
 /**

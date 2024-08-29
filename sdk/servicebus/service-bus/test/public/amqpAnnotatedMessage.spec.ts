@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import chai from "chai";
 import chaiAsPromised from "chai-as-promised";
@@ -12,7 +12,7 @@ import { TestClientType } from "./utils/testUtils";
 const should = chai.should();
 chai.use(chaiAsPromised);
 chai.use(chaiExclude);
-const assert = chai.assert;
+const assert: typeof chai.assert = chai.assert;
 
 [
   // when we encode messages the partition+session queues are basically the "hardest" one

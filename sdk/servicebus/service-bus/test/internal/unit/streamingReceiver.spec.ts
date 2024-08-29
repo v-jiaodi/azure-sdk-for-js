@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import chai from "chai";
 import chaiAsPromised from "chai-as-promised";
@@ -13,7 +13,7 @@ import { AbortError } from "@azure/abort-controller";
 import { assertThrows } from "../../public/utils/testUtils";
 
 chai.use(chaiAsPromised);
-const assert = chai.assert;
+const assert: typeof chai.assert = chai.assert;
 
 describe("StreamingReceiver unit tests", () => {
   const createTestStreamingReceiver = addTestStreamingReceiver();

@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license
+// Licensed under the MIT License
 
 import {
   ClassDeclaration,
@@ -27,6 +27,7 @@ export function sortSourceFileContents(sourceFile: SourceFile) {
   const enums = sourceFile.getEnums();
 
   // Sort elements by exported status
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
   const sortExportedFirst = (a: any, b: any) => (b.isExported() ? 1 : 0) - (a.isExported() ? 1 : 0);
   const variableStructures = variableStatements
     .sort(sortExportedFirst)

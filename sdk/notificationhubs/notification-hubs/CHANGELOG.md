@@ -1,6 +1,6 @@
 # Release History
 
-## 1.2.1 (Unreleased)
+## 1.2.4 (Unreleased)
 
 ### Features Added
 
@@ -8,7 +8,35 @@
 
 ### Bugs Fixed
 
+- Added `pushChannelExpired` and `pushVariables` to the `Installation` type.
+  - [#30439](https://github.com/Azure/azure-sdk-for-js/issues/30439)
+
 ### Other Changes
+
+- Added top level `browser` and `react-native` support in the `package.json` and a common implementation for WebCrypto for both.
+  - [#30697]((https://github.com/Azure/azure-sdk-for-js/issues/30697)
+
+## 1.2.3 (2024-05-21)
+
+### Bugs Fixed
+
+- Added outcome counts to the `NotificationOutcomeDetails` response for browser and FCMV1 notifications.
+  - [#29404](https://github.com/Azure/azure-sdk-for-js/issues/29777)
+
+## 1.2.2 (2024-04-29)
+
+### Bugs Fixed
+
+- Fixed FirebaseV1 Notification to use the correct `data` and create the wrapper `message`.
+  - [#29404](https://github.com/Azure/azure-sdk-for-js/issues/29404)
+  - [#29371](https://github.com/Azure/azure-sdk-for-js/issues/29371)
+
+## 1.2.1 (2024-04-25)
+
+### Bugs Fixed
+
+- Fixed Firebase query for `listRegistrationsByChannel` to use the correct `channel` query parameter.
+  - [#29372](https://github.com/Azure/azure-sdk-for-js/issues/29372)
 
 ## 1.2.0 (2024-03-28)
 

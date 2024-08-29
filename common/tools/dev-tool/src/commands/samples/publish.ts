@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 /**
  * This module is the core of the samples publication system.
@@ -49,7 +49,7 @@ export default leafCommand(commandInfo, async (options) => {
 
     // This is where the actual magic of creating the output from the template happens
     await factory(basePath);
-  } catch (ex: any) {
+  } catch (ex: unknown) {
     log.error((ex as Error).message);
     return false;
   }

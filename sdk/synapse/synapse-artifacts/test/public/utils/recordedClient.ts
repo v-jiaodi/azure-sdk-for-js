@@ -1,7 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
-
-import "./env";
+// Licensed under the MIT License.
 
 import { ArtifactsClient, ArtifactsClientOptionalParams } from "../../../src";
 import { TokenCredential } from "@azure/identity";
@@ -12,7 +10,7 @@ export async function createClient(
   recorder: Recorder,
   options?: ArtifactsClientOptionalParams
 ): Promise<ArtifactsClient> {
-  let credential: TokenCredential = createTestCredential();
+  const credential: TokenCredential = createTestCredential();
 
   await recorder.start({
     envSetupForPlayback: {
@@ -21,11 +19,14 @@ export async function createClient(
       AZURE_TENANT_ID: "88888888-8888-8888-8888-888888888888",
       ENDPOINT: "https://testaccount.dev.azuresynapse.net",
     },
+    removeCentralSanitizers: [
+      "AZSDK3430", // .id in the body is not a secret and is listed below in the beforeEach section
+      "AZSDK3493", // .name in the body is not a secret and is listed below in the beforeEach section
+    ],
   });
 
   const client = new ArtifactsClient(credential, env.ENDPOINT ?? "", recorder.configureClientOptions({
-    ...options,
-    allowInsecureConnection: true,
+    ...options
   }));
   return client;
 }

@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import chai from "chai";
 import chaiAsPromised from "chai-as-promised";
@@ -8,7 +8,7 @@ import { ReceiverHelper } from "../../../src/core/receiverHelper";
 import { assertThrows } from "../../public/utils/testUtils";
 import { createRheaReceiverForTests } from "./unittestUtils";
 chai.use(chaiAsPromised);
-const assert = chai.assert;
+const assert: typeof chai.assert = chai.assert;
 
 describe("ReceiverHelper unit tests", () => {
   const closedReceiver = {

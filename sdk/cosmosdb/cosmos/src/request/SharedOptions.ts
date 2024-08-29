@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 /// <reference lib="dom" />
 import { PriorityLevel } from "../documents/PriorityLevel";
 import { CosmosHeaders } from "../index";
@@ -33,6 +33,13 @@ export interface SharedOptions {
    * <p>Cache Staleness is supported in milliseconds granularity. Anything smaller than milliseconds will be ignored.</p>
    */
   maxIntegratedCacheStalenessInMs?: number;
+
+  /**
+   * Sets if integrated cache should be bypassed or enabled for the request in Azure CosmosDB service.
+   *
+   * <p>Default value is false. By default integrated cache is enabled</p>
+   */
+  bypassIntegratedCache?: boolean;
 
   /**
    * Priority Level (Low/High) for each request.

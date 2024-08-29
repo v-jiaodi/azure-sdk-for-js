@@ -1,5 +1,27 @@
 # Release History
 
+## 1.1.5 (Unreleased)
+
+### Features Added
+
+### Breaking Changes
+
+### Bugs Fixed
+
+### Other Changes
+
+## 1.1.4 (2024-08-01)
+
+### Other Changes
+
+- Adding React-Native support at top level [PR #30521](https://github.com/Azure/azure-sdk-for-js/pull/30521)
+
+## 1.1.3 (2024-07-10)
+
+### Features Added
+
+- Adding react-native logger support [PR #30076](https://github.com/Azure/azure-sdk-for-js/pull/30076)
+
 ## 1.1.2 (2024-04-09)
 
 ### Other Changes

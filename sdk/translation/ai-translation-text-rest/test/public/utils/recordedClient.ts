@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { Context } from "mocha";
 import {
@@ -72,16 +72,6 @@ export async function createCustomTranslationClient(options: {
   };
   const client = createTextTranslationClient(customEndpoint, translatorCredential, updatedOptions);
   return client;
-}
-
-export async function createLanguageClient(options: {
-  recorder?: Recorder;
-  clientOptions?: ClientOptions;
-}): Promise<TextTranslationClient> {
-  const { recorder, clientOptions = {} } = options;
-  const updatedOptions = recorder ? recorder.configureClientOptions(clientOptions) : clientOptions;
-  const endpoint = assertEnvironmentVariable("TEXT_TRANSLATION_ENDPOINT");
-  return createTextTranslationClient(endpoint, undefined, updatedOptions);
 }
 
 export async function createTokenTranslationClient(options: {

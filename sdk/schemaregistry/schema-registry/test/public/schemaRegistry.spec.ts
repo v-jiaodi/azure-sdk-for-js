@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { Recorder, assertEnvironmentVariable } from "@azure-tools/test-recorder";
 import {
@@ -9,7 +9,7 @@ import {
   SchemaProperties,
   SchemaRegistryClient,
 } from "../../src";
-import { assert, matrix } from "@azure/test-utils";
+import { assert, matrix } from "@azure-tools/test-utils";
 import { createRecordedClient, Format, recorderOptions } from "./utils/recordedClient";
 import { ClientSecretCredential } from "@azure/identity";
 import { Context } from "mocha";

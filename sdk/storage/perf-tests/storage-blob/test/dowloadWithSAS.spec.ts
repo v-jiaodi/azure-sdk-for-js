@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { PerfOptionDictionary, getEnvVar, drainStream } from "@azure-tools/test-perf";
 import { StorageBlobTest } from "./storageTest.spec";
@@ -51,8 +51,9 @@ export class StorageBlobDownloadWithSASTest extends StorageBlobTest<StorageBlobD
     this.sasUrl = `https://${getValueInConnString(
       getEnvVar("STORAGE_CONNECTION_STRING"),
       "AccountName",
-    )}.blob.core.windows.net/${StorageBlobDownloadWithSASTest.containerName}/${StorageBlobDownloadWithSASTest.blobName
-      }?${sasParams}`;
+    )}.blob.core.windows.net/${StorageBlobDownloadWithSASTest.containerName}/${
+      StorageBlobDownloadWithSASTest.blobName
+    }?${sasParams}`;
 
     this.blobClientFromSAS = new BlobClient(this.sasUrl);
   }

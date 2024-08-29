@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { createSasTokenProvider } from "@azure/core-amqp";
 import { AzureNamedKeyCredential, AzureSASCredential } from "@azure/core-auth";
@@ -12,7 +12,7 @@ import {
   ServiceBusClientForTests,
   ServiceBusTestHelpers,
 } from "../public/utils/testutils2";
-const assert = chai.assert;
+const assert: typeof chai.assert = chai.assert;
 
 type UnpackReturnType<T extends (...args: any) => any> =
   ReturnType<T> extends Promise<infer U> ? U : never;

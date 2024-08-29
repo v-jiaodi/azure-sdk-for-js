@@ -1,10 +1,10 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { parseServiceBusConnectionString } from "../../../src/util/connectionStringUtils";
 import chai from "chai";
 
-const assert = chai.assert;
+const assert: typeof chai.assert = chai.assert;
 
 describe("Connection String", () => {
   const expectedNamespace = "my.servicebus.windows.net";

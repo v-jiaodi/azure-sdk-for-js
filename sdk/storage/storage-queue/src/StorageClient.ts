@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import { StorageClient as StorageClientContext } from "./generated/src/";
 import { StorageContextClient } from "./StorageContextClient";
@@ -8,7 +8,7 @@ import {
   StoragePipelineOptions,
   getCoreClientOptions,
   getCredentialFromPipeline,
-} from "../../storage-blob/src/Pipeline";
+} from "./Pipeline";
 import { getAccountNameFromUrl } from "./utils/utils.common";
 import { OperationTracingOptions } from "@azure/core-tracing";
 import { AnonymousCredential } from "../../storage-blob/src/credentials/AnonymousCredential";

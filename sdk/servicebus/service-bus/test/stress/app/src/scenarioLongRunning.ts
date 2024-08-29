@@ -1,5 +1,5 @@
 // Copyright (c) Microsoft Corporation.
-// Licensed under the MIT license.
+// Licensed under the MIT License.
 
 import {
   captureConsoleOutputToAppInsights,
@@ -7,7 +7,7 @@ import {
   loopForever as loopInfinitely,
   ServiceBusStressTester,
 } from "./serviceBusStressTester";
-import { AbortController, AbortSignalLike } from "@azure/abort-controller";
+import { AbortSignalLike } from "@azure/abort-controller";
 import { ServiceBusClient, ServiceBusSender } from "@azure/service-bus";
 import { v4 as uuidv4 } from "uuid";
 
